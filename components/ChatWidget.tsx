@@ -152,8 +152,14 @@ export default function ChatWidget() {
         className="fixed bottom-20 right-4 z-50 flex items-center gap-2 rounded-full border-2 border-white bg-caju px-4 py-3 text-white shadow-[0_8px_24px_rgba(194,65,12,0.45)] transition hover:bg-caju-deep md:bottom-6"
         aria-label={aberto ? t("fechar") : t("abrir")}
       >
-        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-lg" aria-hidden>
-          {aberto ? "×" : "🦜"}
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20" aria-hidden>
+          {aberto ? (
+            <span className="text-lg font-bold leading-none">×</span>
+          ) : (
+            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
+              <path d="M4 14c3 1 5 4 6 7 2-3 5-5 9-5-2-3-5-5-8-6 1-3 1-6 0-8-2 2-4 5-7 6 2 1 3 3 0 6Z" />
+            </svg>
+          )}
         </span>
         {!aberto && (
           <span className="pr-1 text-left text-xs font-semibold leading-tight">
