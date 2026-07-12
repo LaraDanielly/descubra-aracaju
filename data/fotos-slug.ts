@@ -41,7 +41,6 @@ export const FOTOS_SLUG = new Set([
   "sesc-atalaia",
   "pousadas-sao-cristovao",
   "pousada-raio-de-sol",
-  "del-mar-hotel",
 ]);
 
 /** Coloca a foto dedicada do slug na frente, sem duplicar. */
