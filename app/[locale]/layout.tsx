@@ -8,12 +8,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import BottomNav from "@/components/BottomNav";
 import NavProgress from "@/components/NavProgress";
-import dynamic from "next/dynamic";
-
-const ChatWidget = dynamic(() => import("@/components/ChatWidget"), {
-  ssr: false,
-});
-
+import ChatWidgetLazy from "@/components/ChatWidgetLazy";
 const archivo = Archivo({
   variable: "--font-archivo",
   subsets: ["latin"],
@@ -84,7 +79,7 @@ export default async function LocaleLayout({
           <main className="flex-1 pb-20 md:pb-0">{children}</main>
           <Footer />
           <BottomNav />
-          <ChatWidget />
+          <ChatWidgetLazy />
         </NextIntlClientProvider>
       </body>
     </html>
