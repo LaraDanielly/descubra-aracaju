@@ -71,7 +71,14 @@
     "saoCristovaoCta": "See the places in São Cristóvão",
     "historiaCta": "Read the history of both cities",
     "explorarTitulo": "All places",
-    "explorarSubtitulo": "Search by name or filter by city and type of outing."
+    "explorarSubtitulo": "Search by name or filter by city and type of outing.",
+    "buscaPlaceholder": "Search a place (beach, museum, pier...)",
+    "buscaAria": "Search a place in the guide",
+    "mapaLegenda": "Sergipe on the Brazil map — Aracaju and São Cristóvão",
+    "filtrosTitulo": "Browse by type",
+    "filtrosSub": "Pick what you want to see. The full ranking lists everything with photos and scores.",
+    "filtroHoteis": "Hotels and inns",
+    "filtroVer": "Open in ranking →"
   },
   "explorar": {
     "buscarPlaceholder": "Search a place (beach, museum, church...)",
@@ -282,19 +289,26 @@
     "verPontosSC": "Places in São Cristóvão"
   },
   "chat": {
-    "titulo": "Ask Caju",
-    "subtitulo": "The guide answers with this site's data",
-    "abrir": "Open chat with the guide",
+    "titulo": "Support · Ask Caju",
+    "subtitulo": "Questions about places, transport and weather",
+    "abrir": "Open guide support",
     "fechar": "Close chat",
-    "placeholder": "Ask about Aracaju or São Cristóvão...",
+    "badgeSuporte": "Support",
+    "badgeAjuda": "Ask Caju",
+    "placeholder": "Ask about places, buses or the weather...",
     "enviar": "Send",
     "sugestao1": "Plan a 2-day itinerary",
     "sugestao2": "How do I get from the waterfront to Downtown?",
     "sugestao3": "Is São Cristóvão worth the trip?",
+    "sugestaoClima": "What's the weather like in Aracaju?",
     "erro": "The chat failed just now. Try again in a moment.",
-    "semChave": "The chat isn't active on this site yet: the GEMINI_API_KEY hasn't been set on the server. Meanwhile, the transport guide and each place's page answer almost everything.",
+    "semChave": "The chat isn't active on this site yet: GEMINI_API_KEY isn't set on the server.",
     "digitando": "Writing...",
-    "avisoIA": "AI-generated answers based on this site's data. Confirm hours and prices before you go."
+    "avisoIA": "AI answers with this site's data and Open-Meteo weather. Confirm hours and prices before you go.",
+    "falar": "Speak",
+    "ouvindo": "Listening...",
+    "falaLigada": "Audio on",
+    "falaDesligada": "Audio muted"
   },
   "footer": {
     "descricao": "A guide to Aracaju and São Cristóvão with real Google ratings, traveler reviews and the way to each place: bus, car or Uber.",

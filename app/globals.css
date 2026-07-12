@@ -134,3 +134,49 @@ h4 {
 .nav-progress-bar {
   animation: nav-slide 0.85s ease-in-out infinite;
 }
+
+@keyframes cta-arara-hop {
+  0%,
+  100% {
+    transform: translate(0, 0) rotate(-8deg);
+  }
+  40% {
+    transform: translate(3px, -3px) rotate(6deg);
+  }
+  70% {
+    transform: translate(-1px, -1px) rotate(-2deg);
+  }
+}
+
+.cta-arara {
+  display: inline-flex;
+  color: inherit;
+  opacity: 0.85;
+  animation: cta-arara-hop 2.4s ease-in-out infinite;
+}
+
+.group:hover .cta-arara {
+  opacity: 1;
+  animation-duration: 1.2s;
+}
+
+.cta-arara-static {
+  display: inline-flex;
+}
+
+@keyframes mapa-pulse {
+  0%,
+  100% {
+    opacity: 0.55;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.06);
+  }
+}
+
+.mapa-pulse {
+  transform-origin: center;
+  animation: mapa-pulse 2.8s ease-in-out infinite;
+}

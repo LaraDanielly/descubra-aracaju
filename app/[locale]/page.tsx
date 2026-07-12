@@ -1,9 +1,11 @@
 import Image from "next/image";
 import { getLocale, getTranslations, setRequestLocale } from "next-intl/server";
-import { Link } from "@/i18n/navigation";
 import { PONTOS, rankingPontos, resolverPonto } from "@/data/pontos";
 import PontoCard from "@/components/PontoCard";
-import ExplorarPontos from "@/components/ExplorarPontos";
+import HeroBusca from "@/components/HeroBusca";
+import MapaBrasilSergipe from "@/components/MapaBrasilSergipe";
+import FiltrosInicio from "@/components/FiltrosInicio";
+import CtaArara, { CtaAraraAnchor } from "@/components/CtaArara";
 
 export default async function Home({
   params,
@@ -33,58 +35,66 @@ export default async function Home({
           fill
           priority
           sizes="100vw"
-          className="object-cover opacity-25"
+          className="object-cover opacity-20"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-arara-deep/85 via-arara-deep/75 to-papel" />
-        <div className="relative mx-auto max-w-6xl px-4 pb-16 pt-20 sm:pt-28">
-          <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-caju-soft">
-            {t("eyebrow")}
-          </p>
-          <h1 className="max-w-3xl font-display text-4xl font-semibold leading-[1.1] text-white sm:text-5xl drop-shadow-sm">
-            {t("titulo1")}{" "}
-            <span className="text-caju-soft">{t("tituloDestaque")}</span>{" "}
-            {t("titulo2")}
-          </h1>
-          <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/90 sm:text-lg">
-            {t("subtitulo")}
-          </p>
-          <div className="mt-8 flex flex-wrap gap-3">
-            <a
-              href="#top10"
-              className="rounded border border-caju bg-caju px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-caju-deep"
-            >
-              {t("ctaLugares")}
-            </a>
-            <Link
-              href="/transporte"
-              className="rounded border border-white/40 bg-white/15 px-5 py-2.5 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/25"
-            >
-              {t("ctaTransporte")}
-            </Link>
+        <div className="absolute inset-0 bg-gradient-to-b from-arara-deep/90 via-arara-deep/80 to-papel" />
+        <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-4 pb-16 pt-16 sm:pt-24 lg:grid-cols-[1.15fr_0.85fr]">
+          <div>
+            <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-caju-soft">
+              {t("eyebrow")}
+            </p>
+            <h1 className="max-w-3xl font-display text-4xl font-semibold leading-[1.1] text-white drop-shadow-sm sm:text-5xl">
+              {t("titulo1")}{" "}
+              <span className="text-caju-soft">{t("tituloDestaque")}</span>{" "}
+              {t("titulo2")}
+            </h1>
+            <p className="mt-5 max-w-2xl text-base leading-relaxed text-white/90 sm:text-lg">
+              {t("subtitulo")}
+            </p>
+
+            <HeroBusca pontos={todos} />
+
+            <div className="mt-8 flex flex-wrap gap-3">
+              <CtaAraraAnchor href="#top10" variant="solid">
+                {t("ctaLugares")}
+              </CtaAraraAnchor>
+              <CtaArara href="/transporte" variant="outline">
+                {t("ctaTransporte")}
+              </CtaArara>
+            </div>
+            <div className="mt-10 grid max-w-3xl grid-cols-3 gap-3">
+              {[
+                { n: String(PONTOS.length), r: t("statLugares") },
+                { n: `${media}★`, r: t("statNota") },
+                { n: "2", r: t("statCidades") },
+              ].map((s) => (
+                <div
+                  key={s.r}
+                  className="rounded-lg border-2 border-caju/40 bg-papel px-3 py-4 text-center shadow-[3px_3px_0_rgba(28,25,23,0.2)]"
+                >
+                  <div className="font-display text-2xl font-bold text-caju-deep sm:text-3xl">
+                    {s.n}
+                  </div>
+                  <div className="mt-1.5 text-[11px] font-medium leading-snug text-tinta sm:text-xs">
+                    {s.r}
+                  </div>
+                </div>
+              ))}
+            </div>
           </div>
-          <div className="mt-10 grid max-w-3xl grid-cols-3 gap-3">
-            {[
-              { n: String(PONTOS.length), r: t("statLugares") },
-              { n: `${media}★`, r: t("statNota") },
-              { n: "2", r: t("statCidades") },
-            ].map((s) => (
-              <div
-                key={s.r}
-                className="rounded-lg border-2 border-caju/40 bg-papel px-3 py-4 text-center shadow-[3px_3px_0_rgba(28,25,23,0.2)]"
-              >
-                <div className="font-display text-2xl font-bold text-caju-deep sm:text-3xl">
-                  {s.n}
-                </div>
-                <div className="mt-1.5 text-[11px] font-medium leading-snug text-tinta sm:text-xs">
-                  {s.r}
-                </div>
-              </div>
-            ))}
+
+          <div className="hidden justify-center lg:flex">
+            <div className="w-full max-w-sm rounded-lg border border-white/15 bg-arara-deep/40 p-4 backdrop-blur-sm">
+              <MapaBrasilSergipe className="h-auto w-full" />
+              <p className="mt-2 text-center text-[11px] text-white/70">
+                {t("mapaLegenda")}
+              </p>
+            </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 -mt-4 relative z-10">
+      <section className="relative z-10 mx-auto -mt-4 max-w-6xl px-4">
         <div className="rounded border border-linha bg-white p-6 shadow-[4px_4px_0_rgba(28,25,23,0.06)] sm:p-8">
           <div className="flex flex-wrap items-start justify-between gap-4">
             <div className="max-w-2xl">
@@ -98,12 +108,9 @@ export default async function Home({
                 {t("previewTexto")}
               </p>
             </div>
-            <Link
-              href="/historia"
-              className="shrink-0 rounded border border-arara bg-arara px-4 py-2 text-sm font-semibold text-white hover:bg-arara-deep"
-            >
+            <CtaArara href="/historia" variant="soft">
               {t("previewCta")} →
-            </Link>
+            </CtaArara>
           </div>
           <div className="mt-6 grid gap-3 sm:grid-cols-3">
             {[
@@ -134,12 +141,9 @@ export default async function Home({
             </h2>
             <p className="mt-1 text-sm text-tinta-suave">{t("topSubtitulo")}</p>
           </div>
-          <Link
-            href="/ranking"
-            className="hidden text-sm font-semibold text-arara sm:inline"
-          >
+          <CtaArara href="/ranking" className="hidden sm:inline-flex">
             {t("rankingCompleto")} →
-          </Link>
+          </CtaArara>
         </div>
         <div className="renda my-6" />
         <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -158,12 +162,9 @@ export default async function Home({
             <p className="mt-3 text-sm leading-relaxed text-tinta-suave">
               {t("faixaOnibusTexto")}
             </p>
-            <Link
-              href="/transporte"
-              className="mt-4 inline-block text-sm font-semibold text-caju"
-            >
+            <CtaArara href="/transporte" className="mt-4">
               {t("faixaOnibusCta")} →
-            </Link>
+            </CtaArara>
           </div>
           <div className="rounded border border-arara/20 bg-arara-soft/40 p-6">
             <h2 className="font-display text-2xl font-semibold text-arara-deep">
@@ -172,26 +173,15 @@ export default async function Home({
             <p className="mt-3 text-sm leading-relaxed text-tinta-suave">
               {t("saoCristovaoTexto")}
             </p>
-            <div className="mt-4 flex flex-wrap gap-3 text-sm font-semibold">
-              <a href="#explorar" className="text-arara">
-                {t("saoCristovaoCta")} →
-              </a>
-              <Link href="/historia" className="text-caju">
-                {t("historiaCta")} →
-              </Link>
+            <div className="mt-4 flex flex-wrap gap-4">
+              <CtaArara href="/mapa">{t("saoCristovaoCta")} →</CtaArara>
+              <CtaArara href="/historia">{t("historiaCta")} →</CtaArara>
             </div>
           </div>
         </div>
       </section>
 
-      <section className="mx-auto max-w-6xl px-4 py-14">
-        <h2 className="font-display text-3xl font-semibold text-tinta">
-          {t("explorarTitulo")}
-        </h2>
-        <p className="mt-1 text-sm text-tinta-suave">{t("explorarSubtitulo")}</p>
-        <div className="renda my-6" />
-        <ExplorarPontos pontos={todos} />
-      </section>
+      <FiltrosInicio />
     </>
   );
 }

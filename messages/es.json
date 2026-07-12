@@ -71,7 +71,14 @@
     "saoCristovaoCta": "Ver los lugares de São Cristóvão",
     "historiaCta": "Leer la historia de las dos ciudades",
     "explorarTitulo": "Todos los lugares",
-    "explorarSubtitulo": "Busca por nombre o filtra por ciudad y tipo de paseo."
+    "explorarSubtitulo": "Busca por nombre o filtra por ciudad y tipo de paseo.",
+    "buscaPlaceholder": "Buscar lugar (playa, museo, orla...)",
+    "buscaAria": "Buscar punto turístico en la guía",
+    "mapaLegenda": "Sergipe en el mapa de Brasil — Aracaju y São Cristóvão",
+    "filtrosTitulo": "Explorar por tipo",
+    "filtrosSub": "Elige lo que quieres ver. El ranking completo lista todo con fotos y notas.",
+    "filtroHoteis": "Hoteles y posadas",
+    "filtroVer": "Abrir en el ranking →"
   },
   "explorar": {
     "buscarPlaceholder": "Buscar lugar (playa, museo, iglesia...)",
@@ -282,19 +289,26 @@
     "verPontosSC": "Lugares de São Cristóvão"
   },
   "chat": {
-    "titulo": "Pregúntale a Caju",
-    "subtitulo": "El guía responde con los datos de este sitio",
-    "abrir": "Abrir chat con el guía",
+    "titulo": "Soporte · Pregúntale a Caju",
+    "subtitulo": "Dudas sobre lugares, transporte y clima",
+    "abrir": "Abrir soporte de la guía",
     "fechar": "Cerrar chat",
-    "placeholder": "Pregunta sobre Aracaju o São Cristóvão...",
+    "badgeSuporte": "Soporte",
+    "badgeAjuda": "Pregúntale a Caju",
+    "placeholder": "Pregunta por lugares, buses o el tiempo...",
     "enviar": "Enviar",
     "sugestao1": "Arma un itinerario de 2 días",
     "sugestao2": "¿Cómo voy del paseo marítimo al Centro?",
     "sugestao3": "¿Vale la pena ir a São Cristóvão?",
+    "sugestaoClima": "¿Cómo está el tiempo en Aracaju?",
     "erro": "El chat falló ahora. Inténtalo de nuevo en unos instantes.",
-    "semChave": "El chat aún no está activo en este sitio: falta configurar la clave GEMINI_API_KEY en el servidor. Mientras tanto, la guía de transporte y las páginas de cada lugar responden casi todo.",
+    "semChave": "El chat aún no está activo: falta configurar GEMINI_API_KEY en el servidor.",
     "digitando": "Escribiendo...",
-    "avisoIA": "Respuestas generadas por IA con los datos del sitio. Confirma horarios y precios antes de ir."
+    "avisoIA": "Respuestas de IA con datos del sitio y clima Open-Meteo. Confirma horarios y precios antes de ir.",
+    "falar": "Hablar",
+    "ouvindo": "Escuchando...",
+    "falaLigada": "Audio activo",
+    "falaDesligada": "Audio silenciado"
   },
   "footer": {
     "descricao": "Guía de Aracaju y São Cristóvão con notas reales de Google, reseñas de viajeros y el camino hasta cada lugar: autobús, coche o Uber.",

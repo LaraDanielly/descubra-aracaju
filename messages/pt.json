@@ -43,7 +43,7 @@
     "eyebrow": "Guia de Aracaju e São Cristóvão",
     "titulo1": "O litoral de Aracaju e as ladeiras de",
     "tituloDestaque": "São Cristóvão",
-    "titulo2": "só num guia",
+    "titulo2": "em um só guia",
     "subtitulo": "Notas reais do Google, avaliações de quem já foi e o caminho até cada lugar: ônibus, carro ou Uber. Sem abrir dez sites.",
     "ctaLugares": "Ver os melhores lugares",
     "ctaTransporte": "Como se locomover",
@@ -71,7 +71,14 @@
     "saoCristovaoCta": "Ver os lugares de São Cristóvão",
     "historiaCta": "Ler a história das duas cidades",
     "explorarTitulo": "Todos os lugares",
-    "explorarSubtitulo": "Busque por nome ou filtre por cidade e tipo de passeio."
+    "explorarSubtitulo": "Busque por nome ou filtre por cidade e tipo de passeio.",
+    "buscaPlaceholder": "Buscar lugar (orla, museu, praia...)",
+    "buscaAria": "Buscar ponto turístico no guia",
+    "mapaLegenda": "Sergipe no mapa do Brasil — Aracaju e São Cristóvão",
+    "filtrosTitulo": "Explorar por tipo",
+    "filtrosSub": "Escolha o que você quer ver. O ranking completo lista tudo com fotos e notas.",
+    "filtroHoteis": "Hotéis e pousadas",
+    "filtroVer": "Abrir no ranking →"
   },
   "explorar": {
     "buscarPlaceholder": "Buscar lugar (orla, museu, igreja...)",
@@ -282,19 +289,26 @@
     "verPontosSC": "Lugares de São Cristóvão"
   },
   "chat": {
-    "titulo": "Pergunte ao Caju",
-    "subtitulo": "O guia responde com os dados deste site",
-    "abrir": "Abrir chat com o guia",
+    "titulo": "Suporte · Pergunte ao Caju",
+    "subtitulo": "Tire dúvidas sobre lugares, transporte e clima",
+    "abrir": "Abrir suporte do guia",
     "fechar": "Fechar chat",
-    "placeholder": "Pergunte sobre Aracaju ou São Cristóvão...",
+    "badgeSuporte": "Suporte",
+    "badgeAjuda": "Pergunte ao Caju",
+    "placeholder": "Pergunte sobre lugares, ônibus ou o tempo...",
     "enviar": "Enviar",
     "sugestao1": "Monte um roteiro de 2 dias",
     "sugestao2": "Como vou da Orla ao Centro?",
     "sugestao3": "Vale a pena ir a São Cristóvão?",
+    "sugestaoClima": "Como está o tempo em Aracaju?",
     "erro": "O chat falhou agora. Tente de novo em instantes.",
-    "semChave": "O chat ainda não foi ativado neste site: falta configurar a chave GEMINI_API_KEY no servidor. Enquanto isso, o guia de transporte e as páginas de cada lugar respondem quase tudo.",
+    "semChave": "O chat ainda não foi ativado neste site: falta configurar a chave GEMINI_API_KEY no servidor.",
     "digitando": "Escrevendo...",
-    "avisoIA": "Respostas geradas por IA com os dados do site. Confirme horários e preços antes de ir."
+    "avisoIA": "Respostas geradas por IA com dados do site e clima Open-Meteo. Confirme horários e preços antes de ir.",
+    "falar": "🎤 Falar",
+    "ouvindo": "Ouvindo...",
+    "falaLigada": "Áudio ligado",
+    "falaDesligada": "Áudio mudo"
   },
   "footer": {
     "descricao": "Guia de Aracaju e São Cristóvão com notas reais do Google, avaliações de viajantes e o caminho até cada lugar: ônibus, carro ou Uber.",

@@ -1,5 +1,10 @@
 import { GoogleGenAI } from "@google/genai";
 import { PONTOS, resolverPonto } from "@/data/pontos";
+import {
+  buscarClima,
+  extrairLugarClima,
+  formatarClima,
+} from "@/lib/clima";
 
 export const runtime = "nodejs";
 
@@ -11,13 +16,14 @@ function contextoGuia(locale: string) {
     )
     .join("\n");
 
-  return `Você é o Caju, mascote-guia do site Descubra Aracaju. Fala de forma direta e concreta, sem marketing genérico, sem listas de três clichês e sem emojis em excesso.
+  return `Você é o Caju, assistente de suporte e guia do site Descubra Aracaju. Fala de forma direta e concreta, sem marketing genérico e sem emojis em excesso.
 Idioma da resposta: ${locale === "en" ? "English" : locale === "es" ? "Spanish" : "português brasileiro"}.
+Você ajuda com: lugares, transporte, comida, hotéis e também clima (quando houver dados de clima no histórico, use-os).
 Fatos fixos:
-- Ônibus em Aracaju não aceita dinheiro: só cartão Mais Aracaju, tarifa R$ 4,50. Cartão avulso gratuito nos terminais.
-- São Cristóvão fica a ~25 km (SE-065/BR-101), fundada em 1590; capital até 1855. Praça São Francisco = UNESCO 2010.
-- Aracaju fundada em 17/03/1855, primeira capital planejada do Brasil (tabuleiro de Pirro).
-- Quando citar um lugar, mencione o caminho do site /ponto/{slug}.
+- Ônibus em Aracaju não aceita dinheiro: só cartão Mais Aracaju, tarifa R$ 4,50.
+- São Cristóvão fica a ~25 km; Praça São Francisco = UNESCO 2010.
+- Aracaju fundada em 17/03/1855 (tabuleiro de Pirro).
+- Quando citar um lugar do guia, mencione /ponto/{slug}.
 Dados dos lugares:
 ${pontos}`;
 }
@@ -45,6 +51,19 @@ export async function POST(req: Request) {
     return Response.json({ error: "empty" }, { status: 400 });
   }
 
+  let climaBloco = "";
+  const lugarClima = extrairLugarClima(last);
+  if (lugarClima) {
+    try {
+      const clima = await buscarClima(lugarClima, locale);
+      if (clima) {
+        climaBloco = `\n\n[DADOS DE CLIMA EM TEMPO REAL]\n${formatarClima(clima, locale)}\nUse esses números na resposta se a pergunta for sobre tempo/clima.`;
+      }
+    } catch {
+      /* segue sem clima */
+    }
+  }
+
   const history = messages.slice(0, -1).map((m) => ({
     role: m.role === "assistant" ? "model" : "user",
     parts: [{ text: m.content }],
@@ -56,7 +75,7 @@ export async function POST(req: Request) {
       model: "gemini-2.5-flash",
       contents: [
         ...history,
-        { role: "user", parts: [{ text: last }] },
+        { role: "user", parts: [{ text: last + climaBloco }] },
       ],
       config: {
         systemInstruction: contextoGuia(locale),
@@ -89,7 +108,9 @@ export async function POST(req: Request) {
     });
   } catch (err) {
     const message =
-      err instanceof Error && "status" in err && (err as { status?: number }).status === 429
+      err instanceof Error &&
+      "status" in err &&
+      (err as { status?: number }).status === 429
         ? "quota_exceeded"
         : "api_error";
     return Response.json({ error: message }, { status: 502 });

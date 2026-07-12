@@ -6,6 +6,17 @@ import { Link } from "@/i18n/navigation";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
+type SpeechRec = {
+  lang: string;
+  continuous: boolean;
+  interimResults: boolean;
+  start: () => void;
+  stop: () => void;
+  onresult: ((ev: { results: { [i: number]: { [j: number]: { transcript: string } } } }) => void) | null;
+  onerror: (() => void) | null;
+  onend: (() => void) | null;
+};
+
 function linkificar(texto: string) {
   const partes = texto.split(/(\/ponto\/[a-z0-9-]+)/g);
   return partes.map((p, i) =>
@@ -28,7 +39,10 @@ export default function ChatWidget() {
   const [enviando, setEnviando] = useState(false);
   const [semChave, setSemChave] = useState(false);
   const [erro, setErro] = useState(false);
+  const [ouvindo, setOuvindo] = useState(false);
+  const [falaOn, setFalaOn] = useState(true);
   const fimRef = useRef<HTMLDivElement>(null);
+  const recRef = useRef<SpeechRec | null>(null);
 
   useEffect(() => {
     if (!aberto) return;
@@ -41,6 +55,46 @@ export default function ChatWidget() {
   useEffect(() => {
     fimRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [msgs, aberto]);
+
+  function falar(textoFala: string) {
+    if (!falaOn || typeof window === "undefined" || !window.speechSynthesis) {
+      return;
+    }
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(textoFala);
+    u.lang = locale === "en" ? "en-US" : locale === "es" ? "es-ES" : "pt-BR";
+    u.rate = 1.02;
+    window.speechSynthesis.speak(u);
+  }
+
+  function iniciarVoz() {
+    const SR =
+      typeof window !== "undefined"
+        ? (window as unknown as {
+            SpeechRecognition?: new () => SpeechRec;
+            webkitSpeechRecognition?: new () => SpeechRec;
+          }).SpeechRecognition ||
+          (window as unknown as { webkitSpeechRecognition?: new () => SpeechRec })
+            .webkitSpeechRecognition
+        : undefined;
+    if (!SR) return;
+    const rec = new SR();
+    rec.lang = locale === "en" ? "en-US" : locale === "es" ? "es-ES" : "pt-BR";
+    rec.continuous = false;
+    rec.interimResults = false;
+    rec.onresult = (ev) => {
+      const saido = ev.results[0]?.[0]?.transcript ?? "";
+      if (saido) {
+        setTexto(saido);
+        void enviar(saido);
+      }
+    };
+    rec.onerror = () => setOuvindo(false);
+    rec.onend = () => setOuvindo(false);
+    recRef.current = rec;
+    setOuvindo(true);
+    rec.start();
+  }
 
   async function enviar(conteudo: string) {
     const msg = conteudo.trim();
@@ -82,6 +136,7 @@ export default function ChatWidget() {
           return copia;
         });
       }
+      if (acc) falar(acc);
     } catch {
       setErro(true);
     } finally {
@@ -94,14 +149,24 @@ export default function ChatWidget() {
       <button
         type="button"
         onClick={() => setAberto((a) => !a)}
-        className="fixed bottom-20 right-4 z-50 flex h-14 w-14 items-center justify-center rounded-full border-2 border-caju bg-caju text-white shadow-lg md:bottom-6"
+        className="fixed bottom-20 right-4 z-50 flex items-center gap-2 rounded-full border-2 border-white bg-caju px-4 py-3 text-white shadow-[0_8px_24px_rgba(194,65,12,0.45)] transition hover:bg-caju-deep md:bottom-6"
         aria-label={aberto ? t("fechar") : t("abrir")}
       >
-        {aberto ? "×" : "🦜"}
+        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20 text-lg" aria-hidden>
+          {aberto ? "×" : "🦜"}
+        </span>
+        {!aberto && (
+          <span className="pr-1 text-left text-xs font-semibold leading-tight">
+            {t("badgeSuporte")}
+            <span className="block text-[10px] font-normal opacity-90">
+              {t("badgeAjuda")}
+            </span>
+          </span>
+        )}
       </button>
 
       {aberto && (
-        <div className="fixed bottom-36 right-4 z-50 flex h-[min(70vh,520px)] w-[min(92vw,380px)] flex-col overflow-hidden rounded border border-linha bg-papel shadow-2xl md:bottom-24">
+        <div className="fixed bottom-36 right-4 z-50 flex h-[min(72vh,560px)] w-[min(94vw,400px)] flex-col overflow-hidden rounded border border-linha bg-papel shadow-2xl md:bottom-24">
           <div className="border-b border-linha bg-arara-deep px-4 py-3 text-white">
             <p className="font-display text-lg font-semibold">{t("titulo")}</p>
             <p className="text-xs text-arara-soft">{t("subtitulo")}</p>
@@ -115,16 +180,18 @@ export default function ChatWidget() {
             )}
             {!semChave && msgs.length === 0 && (
               <div className="flex flex-wrap gap-2">
-                {[t("sugestao1"), t("sugestao2"), t("sugestao3")].map((s) => (
-                  <button
-                    key={s}
-                    type="button"
-                    onClick={() => enviar(s)}
-                    className="rounded border border-linha bg-white px-3 py-1.5 text-left text-xs hover:border-caju"
-                  >
-                    {s}
-                  </button>
-                ))}
+                {[t("sugestao1"), t("sugestao2"), t("sugestao3"), t("sugestaoClima")].map(
+                  (s) => (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => enviar(s)}
+                      className="rounded border border-linha bg-white px-3 py-1.5 text-left text-xs hover:border-caju"
+                    >
+                      {s}
+                    </button>
+                  )
+                )}
               </div>
             )}
             {msgs.map((m, i) => (
@@ -133,7 +200,7 @@ export default function ChatWidget() {
                 className={`max-w-[90%] rounded px-3 py-2 text-sm leading-relaxed ${
                   m.role === "user"
                     ? "ml-auto bg-caju text-white"
-                    : "bg-white border border-linha text-tinta"
+                    : "border border-linha bg-white text-tinta"
                 }`}
               >
                 {m.role === "assistant" ? linkificar(m.content) : m.content}
@@ -142,14 +209,34 @@ export default function ChatWidget() {
             {enviando && (
               <p className="text-xs text-tinta-suave">{t("digitando")}</p>
             )}
-            {erro && (
-              <p className="text-xs text-caju-deep">{t("erro")}</p>
-            )}
+            {erro && <p className="text-xs text-caju-deep">{t("erro")}</p>}
             <div ref={fimRef} />
           </div>
 
+          <div className="flex items-center justify-between gap-2 border-t border-linha px-3 pt-2">
+            <button
+              type="button"
+              onClick={() => setFalaOn((v) => !v)}
+              className="text-[10px] font-semibold uppercase tracking-wide text-tinta-suave hover:text-tinta"
+            >
+              {falaOn ? t("falaLigada") : t("falaDesligada")}
+            </button>
+            <button
+              type="button"
+              onClick={() => (ouvindo ? recRef.current?.stop() : iniciarVoz())}
+              disabled={enviando || semChave}
+              className={`rounded border px-2 py-1 text-[11px] font-semibold ${
+                ouvindo
+                  ? "border-caju bg-caju text-white"
+                  : "border-linha bg-white text-tinta"
+              }`}
+            >
+              {ouvindo ? t("ouvindo") : t("falar")}
+            </button>
+          </div>
+
           <form
-            className="flex gap-2 border-t border-linha p-3"
+            className="flex gap-2 p-3 pt-2"
             onSubmit={(e) => {
               e.preventDefault();
               enviar(texto);
