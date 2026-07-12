@@ -149,10 +149,13 @@ export default function ChatWidget() {
       <button
         type="button"
         onClick={() => setAberto((a) => !a)}
-        className="fixed bottom-20 right-4 z-50 flex items-center gap-2 rounded-full border-2 border-white bg-caju px-4 py-3 text-white shadow-[0_8px_24px_rgba(194,65,12,0.45)] transition hover:bg-caju-deep md:bottom-6"
+        className="fixed bottom-20 right-4 z-50 flex max-w-[min(90vw,280px)] items-center gap-3 rounded-2xl border-2 border-white bg-caju px-4 py-3 text-left text-white shadow-[0_8px_24px_rgba(194,65,12,0.45)] transition hover:bg-caju-deep md:bottom-6"
         aria-label={aberto ? t("fechar") : t("abrir")}
       >
-        <span className="flex h-9 w-9 items-center justify-center rounded-full bg-white/20" aria-hidden>
+        <span
+          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20"
+          aria-hidden
+        >
           {aberto ? (
             <span className="text-lg font-bold leading-none">×</span>
           ) : (
@@ -162,9 +165,9 @@ export default function ChatWidget() {
           )}
         </span>
         {!aberto && (
-          <span className="pr-1 text-left text-xs font-semibold leading-tight">
+          <span className="pr-1 text-sm font-semibold leading-snug">
             {t("badgeSuporte")}
-            <span className="block text-[10px] font-normal opacity-90">
+            <span className="mt-0.5 block text-xs font-normal opacity-95">
               {t("badgeAjuda")}
             </span>
           </span>

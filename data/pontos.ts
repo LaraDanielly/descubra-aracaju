@@ -93,11 +93,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Aberta 24h (quiosques geralmente das 9h à 0h)",
     preco: "Gratuito",
     tempoVisita: "3 a 5 horas",
-    fotos: [
-      "/fotos/2072fb797a.jpg",
-      "/fotos/2de10e50a6.jpg",
-      "/fotos/38b0f9e473.jpg",
-    ],
+    fotos: ["/fotos/orla-de-atalaia.jpg"],
     linhasOnibus: [
       {
         numero: "502",
@@ -146,11 +142,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Ter a sex 10h–16h, sáb/dom 11h–17h (seg fechado)",
     preco: "Gratuito",
     tempoVisita: "1h30 a 2h30",
-    fotos: [
-      "/fotos/b5cc7da19d.jpg",
-      "/fotos/63195e19f8.jpg",
-      "/fotos/50e1beaa71.jpg",
-    ],
+    fotos: ["/fotos/museu-da-gente-sergipana.jpg"],
     linhasOnibus: [
       {
         numero: "004",
@@ -194,11 +186,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Qua a seg 9h–20h (ter fechado; bilheteria até 19h)",
     preco: "R$ 40 inteira / R$ 20 meia",
     tempoVisita: "1h a 1h30",
-    fotos: [
-      "/fotos/de6cde2325.jpg",
-      "/fotos/df7e21c717.jpg",
-      "/fotos/2dee92f820.jpg",
-    ],
+    fotos: ["/fotos/oceanario-de-aracaju.jpg"],
     linhasOnibus: [
       {
         numero: "502",
@@ -242,11 +230,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Aberta 24h (melhor entre 16h e 18h)",
     preco: "Gratuito",
     tempoVisita: "1h a 2h",
-    fotos: [
-      "/fotos/df8027d37d.jpg",
-      "/fotos/14e2b961c8.jpg",
-      "/fotos/b1efa3e463.jpg",
-    ],
+    fotos: ["/fotos/orla-por-do-sol.jpg"],
     linhasOnibus: [
       {
         numero: "501",
@@ -285,10 +269,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Saídas dos catamarãs entre 9h e 14h (confirme com a agência)",
     preco: "R$ 60 a R$ 100 o passeio de catamarã",
     tempoVisita: "Meio dia (3 a 5 horas)",
-    fotos: [
-      "/fotos/710564169e.jpg",
-      "/fotos/e79b1ce6d9.jpg",
-    ],
+    fotos: ["/fotos/croa-do-gore.jpg"],
     linhasOnibus: [
       {
         numero: "501",
@@ -327,11 +308,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Conforme saída do catamarã (manhã e início da tarde)",
     preco: "Incluída nos passeios de catamarã (R$ 60 a R$ 100)",
     tempoVisita: "≈ 2h de parada na ilha",
-    fotos: [
-      "/fotos/e0e0da109e.jpg",
-      "/fotos/9b384d7313.jpg",
-      "/fotos/566b3410df.jpg",
-    ],
+    fotos: ["/fotos/ilha-dos-namorados.jpg"],
     linhasOnibus: [
       {
         numero: "501",
@@ -369,11 +346,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Restaurantes das 11h à 0h (mais movimento a partir das 19h)",
     preco: "Pratos entre R$ 60 e R$ 150 (servem 2-3 pessoas)",
     tempoVisita: "2 a 3 horas (jantar)",
-    fotos: [
-      "/fotos/d369119f93.jpg",
-      "/fotos/86c49bf715.jpg",
-      "/fotos/033f3c91e8.jpg",
-    ],
+    fotos: ["/fotos/passarela-do-caranguejo.jpg"],
     linhasOnibus: [
       {
         numero: "502",
@@ -417,11 +390,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Seg a sáb 7h–17h, dom 7h–12h",
     preco: "Entrada gratuita",
     tempoVisita: "1h30 a 2h",
-    fotos: [
-      "/fotos/06a88f446a.jpg",
-      "/fotos/09cdddfc16.jpg",
-      "/fotos/ca9fa059a9.jpg",
-    ],
+    fotos: ["/fotos/mercado-municipal-antonio-franco.jpg"],
     linhasOnibus: [
       {
         numero: "004",
@@ -465,11 +434,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Livre (museus geralmente ter–dom, horário comercial)",
     preco: "Gratuito (museus gratuitos ou simbólicos)",
     tempoVisita: "2 a 3 horas",
-    fotos: [
-      "/fotos/5cc7db4d37.jpg",
-      "/fotos/3bbf6487b2.jpg",
-      "/fotos/80f06a4260.jpg",
-    ],
+    fotos: ["/fotos/centro-historico.jpg"],
     linhasOnibus: [
       {
         numero: "051",
@@ -513,10 +478,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Aberto 24h (iluminação à noite)",
     preco: "Gratuito",
     tempoVisita: "30 min a 1h",
-    fotos: [
-      "/fotos/01d12d6f2c.jpg",
-      "/fotos/e79b1ce6d9.jpg",
-    ],
+    fotos: ["/fotos/largo-da-gente-sergipana.jpg"],
     linhasOnibus: [
       {
         numero: "004",
@@ -554,11 +516,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Livre (igreja aberta em horários de missa e visitação)",
     preco: "Gratuito",
     tempoVisita: "45 min a 1h",
-    fotos: [
-      "/fotos/2d1d890d65.jpg",
-      "/fotos/9af28f4ff8.jpg",
-      "/fotos/8eb23da0ed.jpg",
-    ],
+    fotos: ["/fotos/colina-de-santo-antonio.jpg"],
     linhasOnibus: [
       {
         numero: "008",
@@ -595,11 +553,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Diariamente, 5h–22h",
     preco: "Gratuito",
     tempoVisita: "1 a 2 horas",
-    fotos: [
-      "/fotos/e3f81f9220.jpg",
-      "/fotos/27f5467c49.jpg",
-      "/fotos/015e94829e.jpg",
-    ],
+    fotos: ["/fotos/parque-da-sementeira.jpg"],
     linhasOnibus: [
       {
         numero: "002",
@@ -638,10 +592,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Aberta 24h (quiosques das 8h às 18h)",
     preco: "Gratuito",
     tempoVisita: "Meio dia",
-    fotos: [
-      "/fotos/b1efa3e463.jpg",
-      "/fotos/38b0f9e473.jpg",
-    ],
+    fotos: ["/fotos/praia-de-aruana.jpg"],
     linhasOnibus: [
       {
         numero: "600 CP1/CP2",
@@ -685,10 +636,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Aberta 24h (quiosques das 8h às 22h)",
     preco: "Gratuito",
     tempoVisita: "2 a 4 horas",
-    fotos: [
-      "/fotos/2de10e50a6.jpg",
-      "/fotos/38b0f9e473.jpg",
-    ],
+    fotos: ["/fotos/praia-dos-artistas.jpg"],
     linhasOnibus: [
       {
         numero: "502",
@@ -730,10 +678,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Aberto 24h (mais movimento das 16h às 21h)",
     preco: "Gratuito",
     tempoVisita: "1 a 2 horas",
-    fotos: [
-      "/fotos/e79b1ce6d9.jpg",
-      "/fotos/751f67cd18.jpg",
-    ],
+    fotos: ["/fotos/mirante-da-13-de-julho.jpg"],
     linhasOnibus: [
       {
         numero: "002",
@@ -771,11 +716,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Diariamente 7h–19h (missas: consultar)",
     preco: "Gratuito",
     tempoVisita: "30 min",
-    fotos: [
-      "/fotos/3bbf6487b2.jpg",
-      "/fotos/390930ae44.jpg",
-      "/fotos/878533267e.jpg",
-    ],
+    fotos: ["/fotos/catedral-metropolitana.jpg"],
     linhasOnibus: [
       {
         numero: "051",
@@ -813,11 +754,7 @@ export const PONTOS_ARACAJU: Ponto[] = [
     horario: "Aberta 24h",
     preco: "Travessia gratuita",
     tempoVisita: "Travessia + praias da Barra: meio dia",
-    fotos: [
-      "/fotos/b461a6a90e.jpg",
-      "/fotos/319137fb21.jpg",
-      "/fotos/751f67cd18.jpg",
-    ],
+    fotos: ["/fotos/ponte-aracaju-barra.jpg"],
     linhasOnibus: [
       {
         numero: "021",

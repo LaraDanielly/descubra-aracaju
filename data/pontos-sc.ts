@@ -33,7 +33,7 @@ export const PONTOS_SAO_CRISTOVAO: Ponto[] = [
     horario: L("Aberta 24h", "Open 24h", "Abierta 24h"),
     preco: L("Gratuito", "Free", "Gratis"),
     tempoVisita: L("1 a 2 horas", "1 to 2 hours", "1 a 2 horas"),
-    fotos: ["/fotos/f3182c258e.jpg", "/fotos/6d8dcdc082.jpg"],
+    fotos: ["/fotos/praca-sao-francisco.jpg"],
     linhasOnibus: [
       {
         numero: "Intermunicipal",
@@ -123,7 +123,7 @@ export const PONTOS_SAO_CRISTOVAO: Ponto[] = [
       "Entrada simbólica / descuentos disponibles"
     ),
     tempoVisita: L("1 a 1h30", "1 to 1.5 hours", "1 a 1h30"),
-    fotos: ["/fotos/06a150464c.jpg", "/fotos/4a5e8ca970.jpg"],
+    fotos: ["/fotos/convento-sao-francisco.jpg"],
     linhasOnibus: [
       {
         numero: "Intermunicipal",
@@ -204,7 +204,7 @@ export const PONTOS_SAO_CRISTOVAO: Ponto[] = [
     ),
     preco: L("Gratuito ou simbólico", "Free or symbolic", "Gratis o simbólico"),
     tempoVisita: L("1 a 1h30", "1 to 1.5 hours", "1 a 1h30"),
-    fotos: ["/fotos/e81e6d09f2.jpg", "/fotos/28763ec6ed.jpg"],
+    fotos: ["/fotos/museu-historico-de-sergipe.jpg"],
     linhasOnibus: [
       {
         numero: "Intermunicipal",
@@ -277,7 +277,7 @@ export const PONTOS_SAO_CRISTOVAO: Ponto[] = [
     ),
     preco: L("Gratuito", "Free", "Gratis"),
     tempoVisita: L("30 a 45 min", "30–45 min", "30 a 45 min"),
-    fotos: ["/fotos/73d7146334.jpg"],
+    fotos: ["/fotos/igreja-matriz-nossa-senhora-vitoria.jpg"],
     linhasOnibus: [
       {
         numero: "Intermunicipal",
@@ -350,7 +350,7 @@ export const PONTOS_SAO_CRISTOVAO: Ponto[] = [
     ),
     preco: L("Gratuito", "Free", "Gratis"),
     tempoVisita: L("20 a 40 min", "20–40 min", "20 a 40 min"),
-    fotos: ["/fotos/bf204e5804.jpg"],
+    fotos: ["/fotos/igreja-rosario-homens-pretos.jpg"],
     linhasOnibus: [
       {
         numero: "Intermunicipal",
@@ -419,7 +419,7 @@ export const PONTOS_SAO_CRISTOVAO: Ponto[] = [
     horario: L("Aberto 24h", "Open 24h", "Abierto 24h"),
     preco: L("Gratuito", "Free", "Gratis"),
     tempoVisita: L("20 a 40 min", "20–40 min", "20 a 40 min"),
-    fotos: ["/fotos/6604d084cf.jpg"],
+    fotos: ["/fotos/mirante-do-cristo.jpg"],
     linhasOnibus: [
       {
         numero: "Intermunicipal",
@@ -496,7 +496,7 @@ export const PONTOS_SAO_CRISTOVAO: Ponto[] = [
       "Entrada simbólica / gratis algunos días"
     ),
     tempoVisita: L("2 a 3 horas", "2 to 3 hours", "2 a 3 horas"),
-    fotos: ["/fotos/6d8dcdc082.jpg"],
+    fotos: ["/fotos/bica-dos-pintos.jpg"],
     linhasOnibus: [
       {
         numero: "Local",
@@ -577,7 +577,7 @@ export const PONTOS_SAO_CRISTOVAO: Ponto[] = [
     ),
     preco: L("Gratuito", "Free", "Gratis"),
     tempoVisita: L("45 min a 1h", "45 min to 1 hour", "45 min a 1h"),
-    fotos: ["/fotos/28763ec6ed.jpg"],
+    fotos: ["/fotos/casa-culturas-populares.jpg"],
     linhasOnibus: [
       {
         numero: "Intermunicipal",

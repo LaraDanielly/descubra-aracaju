@@ -6,6 +6,8 @@ import { Link } from "@/i18n/navigation";
 import type { PontoResolvido } from "@/data/pontos";
 import StarRating from "./StarRating";
 import TransporteBadge from "./TransporteBadge";
+import { RankBadge } from "./RankBadge";
+import { CtaAraraInline } from "./CtaArara";
 
 type Props = {
   ponto: PontoResolvido;
@@ -31,8 +33,8 @@ export default function PontoCard({ ponto, posicao }: Props) {
           sizes="(max-width:768px) 100vw, 33vw"
         />
         {typeof posicao === "number" && (
-          <span className="selo-nota absolute left-3 top-3 rounded-sm bg-papel/95 px-2 py-1 text-sm font-bold">
-            #{posicao}
+          <span className="absolute left-3 top-3">
+            <RankBadge posicao={posicao} />
           </span>
         )}
         <span className="absolute bottom-3 left-3 rounded bg-tinta/80 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-papel">
@@ -58,7 +60,7 @@ export default function PontoCard({ ponto, posicao }: Props) {
           {ponto.resumo}
         </p>
         <span className="mt-auto pt-2 text-sm font-semibold text-arara">
-          {t("verDetalhes")} →
+          <CtaAraraInline>{t("verDetalhes")} →</CtaAraraInline>
         </span>
       </div>
     </Link>

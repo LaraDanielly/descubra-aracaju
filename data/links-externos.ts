@@ -93,7 +93,3 @@ export const LINKS_POR_SLUG: Record<string, LinkExterno[]> = {
 export function linksDoSlug(slug: string): LinkExterno[] {
   return LINKS_POR_SLUG[slug] ?? [];
 }
-
-export function fotoPrincipal(slug: string): string {
-  return `/fotos/${slug}.jpg`;
-}

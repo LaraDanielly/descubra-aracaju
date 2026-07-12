@@ -1,5 +1,3 @@
-import { fotoPrincipal } from "./links-externos";
-
 /** Slugs com foto dedicada enviada pelo time (public/fotos/{slug}.jpg). */
 export const FOTOS_SLUG = new Set([
   "museu-da-gente-sergipana",
@@ -42,12 +40,16 @@ export const FOTOS_SLUG = new Set([
   "pousada-raio-de-sol",
 ]);
 
-/**
- * Usa só a foto dedicada do slug — remove hashes antigos do ranking/cards.
- */
+export function fotoPrincipal(slug: string): string {
+  return `/fotos/${slug}.jpg`;
+}
+
+/** Só a foto dedicada — nunca hashes antigos. */
 export function comFotoPrincipal(slug: string, fotos: string[]): string[] {
   if (FOTOS_SLUG.has(slug)) return [fotoPrincipal(slug)];
-  return fotos;
+  // Sem foto dedicada: descarta hashes e usa o que sobrar; se vazio, path do slug mesmo
+  const limpas = fotos.filter((f) => !/\/fotos\/[a-f0-9]{10}\.jpg$/i.test(f));
+  return limpas.length > 0 ? limpas : [fotoPrincipal(slug)];
 }
 
 export function fotoDeSlug(slug: string, fallback: string): string {
