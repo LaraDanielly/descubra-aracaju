@@ -1,36 +1,37 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Descubra Aracaju 🦜🥭
 
-## Getting Started
+Guia turístico moderno de Aracaju (SE), em português, feito com dados reais:
 
-First, run the development server:
+- **Ranking** dos pontos turísticos mais bem avaliados (notas reais do Google)
+- **Avaliações** de viajantes ordenadas da melhor para a pior + formulário para o visitante avaliar (aparece no site e há botão para avaliar também no Google)
+- **Mapa interativo** gratuito (Leaflet + OpenStreetMap)
+- **Como chegar** em cada lugar: linhas de ônibus reais, estimativa de Uber e recomendação automática do melhor transporte, com link para rota e trânsito ao vivo no Google Maps
+- **Guia do cartão Mais Aracaju**: o ônibus não aceita dinheiro — explicamos onde comprar o cartão pré-pago (terminais de integração, CEAC da Rua do Turista, agentes) e como recarregar
+- **PWA**: instalável no celular como aplicativo
+
+## Rodando o projeto
 
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Abra [http://localhost:3000](http://localhost:3000).
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Avaliações persistentes (opcional)
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Sem configuração nenhuma, as avaliações dos usuários ficam salvas no navegador (localStorage). Para persistir num banco de verdade:
 
-## Learn More
+1. Crie um projeto gratuito em [supabase.com](https://supabase.com)
+2. Execute o script [`supabase/schema.sql`](supabase/schema.sql) no SQL Editor
+3. Copie `.env.example` para `.env.local` e preencha `NEXT_PUBLIC_SUPABASE_URL` e `NEXT_PUBLIC_SUPABASE_ANON_KEY`
 
-To learn more about Next.js, take a look at the following resources:
+## Stack
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- Next.js (App Router) + TypeScript + Tailwind CSS 4
+- Leaflet / react-leaflet (mapa)
+- Supabase (avaliações, com fallback em localStorage)
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Dados
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Notas, número de avaliações, linhas de ônibus, preços de Uber e informações do cartão Mais Aracaju foram levantados em julho de 2026 a partir de fontes públicas (Google Maps, SMTT/AracajuCard, Prefeitura de Aracaju, Moovit). Fotos: Wikimedia Commons.
