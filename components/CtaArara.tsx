@@ -10,26 +10,6 @@ type Props = {
   variant?: "solid" | "outline" | "text" | "soft";
 };
 
-/** Uma ararinha pequena e uniforme ao lado do texto. */
-function ArarinhaMini() {
-  return (
-    <svg
-      viewBox="0 0 24 24"
-      width={14}
-      height={14}
-      className="cta-arara-mini shrink-0"
-      aria-hidden
-    >
-      <path
-        d="M4 14c3 1 5 4 6 7 2-3 5-5 9-5-2-3-5-5-8-6 1-3 1-6 0-8-2 2-4 5-7 6 2 1 3 3 0 6Z"
-        fill="currentColor"
-        opacity="0.95"
-      />
-      <circle cx="15.5" cy="9.5" r="1" fill="#FBBF24" />
-    </svg>
-  );
-}
-
 function classes(variant: Props["variant"]) {
   return variant === "solid"
     ? "inline-flex items-center gap-2 rounded border border-caju bg-caju px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-caju-deep"
@@ -40,15 +20,44 @@ function classes(variant: Props["variant"]) {
         : "inline-flex items-center gap-1.5 text-sm font-semibold text-arara transition hover:text-arara-deep";
 }
 
+/** Seta/mãozinha animada — sinal claro de “clique aqui”, sem poluir. */
+function SinalClique({ claro = false }: { claro?: boolean }) {
+  return (
+    <span
+      aria-hidden
+      style={{
+        display: "inline-flex",
+        alignItems: "center",
+        animation: "ctaPulse 1.4s ease-in-out infinite",
+        color: claro ? "rgba(255,255,255,0.95)" : "currentColor",
+      }}
+    >
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
+        <path
+          d="M8 5v14l11-7L8 5Z"
+          fill="currentColor"
+        />
+      </svg>
+      <style>{`
+        @keyframes ctaPulse {
+          0%, 100% { transform: translateX(0); opacity: 0.75; }
+          50% { transform: translateX(4px); opacity: 1; }
+        }
+      `}</style>
+    </span>
+  );
+}
+
 export default function CtaArara({
   href,
   children,
   className = "",
   variant = "text",
 }: Props) {
+  const claro = variant === "solid" || variant === "soft" || variant === "outline";
   return (
     <Link href={href} className={`${classes(variant)} ${className}`}>
-      <ArarinhaMini />
+      <SinalClique claro={claro} />
       <span>{children}</span>
     </Link>
   );
@@ -65,9 +74,10 @@ export function CtaAraraAnchor({
   className?: string;
   variant?: "solid" | "outline" | "text" | "soft";
 }) {
+  const claro = variant === "solid" || variant === "soft" || variant === "outline";
   return (
     <a href={href} className={`${classes(variant)} ${className}`}>
-      <ArarinhaMini />
+      <SinalClique claro={claro} />
       <span>{children}</span>
     </a>
   );
@@ -76,7 +86,7 @@ export function CtaAraraAnchor({
 export function CtaAraraInline({ children }: { children: ReactNode }) {
   return (
     <span className="inline-flex items-center gap-1.5">
-      <ArarinhaMini />
+      <SinalClique />
       <span>{children}</span>
     </span>
   );

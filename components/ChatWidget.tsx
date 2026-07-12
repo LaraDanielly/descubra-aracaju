@@ -41,6 +41,7 @@ export default function ChatWidget() {
   const [erro, setErro] = useState(false);
   const [ouvindo, setOuvindo] = useState(false);
   const [falaOn, setFalaOn] = useState(true);
+  const [floatY, setFloatY] = useState(0);
   const fimRef = useRef<HTMLDivElement>(null);
   const recRef = useRef<SpeechRec | null>(null);
 
@@ -55,6 +56,26 @@ export default function ChatWidget() {
   useEffect(() => {
     fimRef.current?.scrollIntoView({ behavior: "smooth" });
   }, [msgs, aberto]);
+
+  // Flutuação garantida via JS (não depende de CSS global)
+  useEffect(() => {
+    if (aberto) return;
+    if (
+      typeof window !== "undefined" &&
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      return;
+    }
+    let frame = 0;
+    const start = performance.now();
+    const tick = (now: number) => {
+      const y = Math.sin((now - start) / 450) * 12;
+      setFloatY(y);
+      frame = requestAnimationFrame(tick);
+    };
+    frame = requestAnimationFrame(tick);
+    return () => cancelAnimationFrame(frame);
+  }, [aberto]);
 
   function falar(textoFala: string) {
     if (!falaOn || typeof window === "undefined" || !window.speechSynthesis) {
@@ -147,13 +168,34 @@ export default function ChatWidget() {
   return (
     <>
       {!aberto && (
-        <div className="chat-launcher">
-          <span className="chat-launcher-ring" aria-hidden />
+        <div
+          style={{
+            position: "fixed",
+            right: 16,
+            bottom: 88,
+            zIndex: 60,
+            transform: `translateY(${floatY}px)`,
+            willChange: "transform",
+          }}
+          className="md:!bottom-6"
+        >
+          <span
+            aria-hidden
+            style={{
+              position: "absolute",
+              inset: -6,
+              borderRadius: 18,
+              border: "2px solid rgba(194,65,12,0.45)",
+              animation: "cajuRing 2s ease-out infinite",
+              pointerEvents: "none",
+            }}
+          />
           <button
             type="button"
             onClick={() => setAberto(true)}
-            className="chat-balao flex max-w-[min(90vw,300px)] items-start gap-3 rounded-2xl border-2 border-white bg-caju px-4 py-3 text-left text-white shadow-[0_10px_28px_rgba(194,65,12,0.5)] transition hover:bg-caju-deep"
+            className="flex max-w-[min(90vw,300px)] items-start gap-3 rounded-2xl border-2 border-white bg-caju px-4 py-3 text-left text-white shadow-[0_10px_28px_rgba(194,65,12,0.5)] transition hover:bg-caju-deep"
             aria-label={t("abrir")}
+            style={{ position: "relative" }}
           >
             <span
               className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/25"
@@ -169,7 +211,29 @@ export default function ChatWidget() {
                 {t("badgeAjuda")}
               </span>
             </span>
+            <span
+              aria-hidden
+              style={{
+                position: "absolute",
+                right: 22,
+                bottom: -8,
+                width: 0,
+                height: 0,
+                borderLeft: "8px solid transparent",
+                borderRight: "8px solid transparent",
+                borderTop: "8px solid #c2410c",
+              }}
+            />
           </button>
+          <style>{`
+            @keyframes cajuRing {
+              0% { transform: scale(1); opacity: 0.55; }
+              100% { transform: scale(1.22); opacity: 0; }
+            }
+            @media (min-width: 768px) {
+              .md\\:!bottom-6 { bottom: 24px !important; }
+            }
+          `}</style>
         </div>
       )}
 

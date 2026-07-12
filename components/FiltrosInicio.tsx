@@ -43,7 +43,7 @@ export default function FiltrosInicio() {
               className={`flex h-10 w-10 items-center justify-center rounded ${f.cor} text-white`}
               aria-hidden
             >
-              <span className="cta-arara-mini opacity-90">
+            <span className="opacity-90" aria-hidden>
                 <svg viewBox="0 0 24 24" width={18} height={18} fill="currentColor">
                   <path d="M4 14c3 1 5 4 6 7 2-3 5-5 9-5-2-3-5-5-8-6 1-3 1-6 0-8-2 2-4 5-7 6 2 1 3 3 0 6Z" />
                 </svg>
