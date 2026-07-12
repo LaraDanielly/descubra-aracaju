@@ -146,51 +146,63 @@ export default function ChatWidget() {
 
   return (
     <>
-      <button
-        type="button"
-        onClick={() => setAberto((a) => !a)}
-        className="fixed bottom-20 right-4 z-50 flex max-w-[min(90vw,280px)] items-center gap-3 rounded-2xl border-2 border-white bg-caju px-4 py-3 text-left text-white shadow-[0_8px_24px_rgba(194,65,12,0.45)] transition hover:bg-caju-deep md:bottom-6"
-        aria-label={aberto ? t("fechar") : t("abrir")}
-      >
-        <span
-          className="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-white/20"
-          aria-hidden
-        >
-          {aberto ? (
-            <span className="text-lg font-bold leading-none">×</span>
-          ) : (
-            <svg viewBox="0 0 24 24" className="h-5 w-5" fill="currentColor">
-              <path d="M4 14c3 1 5 4 6 7 2-3 5-5 9-5-2-3-5-5-8-6 1-3 1-6 0-8-2 2-4 5-7 6 2 1 3 3 0 6Z" />
-            </svg>
-          )}
-        </span>
-        {!aberto && (
-          <span className="pr-1 text-sm font-semibold leading-snug">
-            {t("badgeSuporte")}
-            <span className="mt-0.5 block text-xs font-normal opacity-95">
-              {t("badgeAjuda")}
+      {!aberto && (
+        <div className="chat-launcher fixed bottom-[5.5rem] right-4 z-50 md:bottom-6">
+          <span className="chat-launcher-ring" aria-hidden />
+          <button
+            type="button"
+            onClick={() => setAberto(true)}
+            className="chat-balao flex max-w-[min(90vw,300px)] items-start gap-3 rounded-2xl border-2 border-white bg-caju px-4 py-3 text-left text-white shadow-[0_10px_28px_rgba(194,65,12,0.5)] transition hover:bg-caju-deep"
+            aria-label={t("abrir")}
+          >
+            <span
+              className="mt-0.5 flex h-11 w-11 shrink-0 items-center justify-center rounded-full bg-white/25"
+              aria-hidden
+            >
+              <svg viewBox="0 0 24 24" className="h-6 w-6" fill="currentColor">
+                <path d="M4 14c3 1 5 4 6 7 2-3 5-5 9-5-2-3-5-5-8-6 1-3 1-6 0-8-2 2-4 5-7 6 2 1 3 3 0 6Z" />
+              </svg>
             </span>
-          </span>
-        )}
-      </button>
+            <span className="pr-1 pt-0.5 text-[15px] font-semibold leading-snug">
+              {t("badgeSuporte")}
+              <span className="mt-1 block text-sm font-normal opacity-95">
+                {t("badgeAjuda")}
+              </span>
+            </span>
+          </button>
+        </div>
+      )}
 
       {aberto && (
-        <div className="fixed bottom-36 right-4 z-50 flex h-[min(72vh,560px)] w-[min(94vw,400px)] flex-col overflow-hidden rounded border border-linha bg-papel shadow-2xl md:bottom-24">
-          <div className="border-b border-linha bg-arara-deep px-4 py-3 text-white">
-            <p className="font-display text-lg font-semibold">{t("titulo")}</p>
-            <p className="text-xs text-arara-soft">{t("subtitulo")}</p>
-          </div>
+        <>
+          <button
+            type="button"
+            onClick={() => setAberto(false)}
+            className="fixed bottom-20 right-4 z-50 flex h-12 w-12 items-center justify-center rounded-full border-2 border-white bg-caju text-xl font-bold text-white shadow-lg md:bottom-6"
+            aria-label={t("fechar")}
+          >
+            ×
+          </button>
+          <div className="fixed bottom-36 right-4 z-50 flex h-[min(72vh,560px)] w-[min(94vw,400px)] flex-col overflow-hidden rounded border border-linha bg-papel shadow-2xl md:bottom-24">
+            <div className="border-b border-linha bg-arara-deep px-4 py-3 text-white">
+              <p className="font-display text-lg font-semibold">{t("titulo")}</p>
+              <p className="text-xs text-arara-soft">{t("subtitulo")}</p>
+            </div>
 
-          <div className="flex-1 space-y-3 overflow-y-auto p-3">
-            {semChave && msgs.length === 0 && (
-              <p className="rounded border border-caju/30 bg-caju-soft/40 p-3 text-sm text-caju-deep">
-                {t("semChave")}
-              </p>
-            )}
-            {!semChave && msgs.length === 0 && (
-              <div className="flex flex-wrap gap-2">
-                {[t("sugestao1"), t("sugestao2"), t("sugestao3"), t("sugestaoClima")].map(
-                  (s) => (
+            <div className="flex-1 space-y-3 overflow-y-auto p-3">
+              {semChave && msgs.length === 0 && (
+                <p className="rounded border border-caju/30 bg-caju-soft/40 p-3 text-sm text-caju-deep">
+                  {t("semChave")}
+                </p>
+              )}
+              {!semChave && msgs.length === 0 && (
+                <div className="flex flex-wrap gap-2">
+                  {[
+                    t("sugestao1"),
+                    t("sugestao2"),
+                    t("sugestao3"),
+                    t("sugestaoClima"),
+                  ].map((s) => (
                     <button
                       key={s}
                       type="button"
@@ -199,75 +211,75 @@ export default function ChatWidget() {
                     >
                       {s}
                     </button>
-                  )
-                )}
-              </div>
-            )}
-            {msgs.map((m, i) => (
-              <div
-                key={i}
-                className={`max-w-[90%] rounded px-3 py-2 text-sm leading-relaxed ${
-                  m.role === "user"
-                    ? "ml-auto bg-caju text-white"
-                    : "border border-linha bg-white text-tinta"
+                  ))}
+                </div>
+              )}
+              {msgs.map((m, i) => (
+                <div
+                  key={i}
+                  className={`max-w-[90%] rounded px-3 py-2 text-sm leading-relaxed ${
+                    m.role === "user"
+                      ? "ml-auto bg-caju text-white"
+                      : "border border-linha bg-white text-tinta"
+                  }`}
+                >
+                  {m.role === "assistant" ? linkificar(m.content) : m.content}
+                </div>
+              ))}
+              {enviando && (
+                <p className="text-xs text-tinta-suave">{t("digitando")}</p>
+              )}
+              {erro && <p className="text-xs text-caju-deep">{t("erro")}</p>}
+              <div ref={fimRef} />
+            </div>
+
+            <div className="flex items-center justify-between gap-2 border-t border-linha px-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setFalaOn((v) => !v)}
+                className="text-[10px] font-semibold uppercase tracking-wide text-tinta-suave hover:text-tinta"
+              >
+                {falaOn ? t("falaLigada") : t("falaDesligada")}
+              </button>
+              <button
+                type="button"
+                onClick={() => (ouvindo ? recRef.current?.stop() : iniciarVoz())}
+                disabled={enviando || semChave}
+                className={`rounded border px-2 py-1 text-[11px] font-semibold ${
+                  ouvindo
+                    ? "border-caju bg-caju text-white"
+                    : "border-linha bg-white text-tinta"
                 }`}
               >
-                {m.role === "assistant" ? linkificar(m.content) : m.content}
-              </div>
-            ))}
-            {enviando && (
-              <p className="text-xs text-tinta-suave">{t("digitando")}</p>
-            )}
-            {erro && <p className="text-xs text-caju-deep">{t("erro")}</p>}
-            <div ref={fimRef} />
-          </div>
+                {ouvindo ? t("ouvindo") : t("falar")}
+              </button>
+            </div>
 
-          <div className="flex items-center justify-between gap-2 border-t border-linha px-3 pt-2">
-            <button
-              type="button"
-              onClick={() => setFalaOn((v) => !v)}
-              className="text-[10px] font-semibold uppercase tracking-wide text-tinta-suave hover:text-tinta"
+            <form
+              className="flex gap-2 p-3 pt-2"
+              onSubmit={(e) => {
+                e.preventDefault();
+                enviar(texto);
+              }}
             >
-              {falaOn ? t("falaLigada") : t("falaDesligada")}
-            </button>
-            <button
-              type="button"
-              onClick={() => (ouvindo ? recRef.current?.stop() : iniciarVoz())}
-              disabled={enviando || semChave}
-              className={`rounded border px-2 py-1 text-[11px] font-semibold ${
-                ouvindo
-                  ? "border-caju bg-caju text-white"
-                  : "border-linha bg-white text-tinta"
-              }`}
-            >
-              {ouvindo ? t("ouvindo") : t("falar")}
-            </button>
+              <input
+                value={texto}
+                onChange={(e) => setTexto(e.target.value)}
+                placeholder={t("placeholder")}
+                disabled={enviando || semChave}
+                className="flex-1 rounded border border-linha bg-white px-3 py-2 text-sm outline-none focus:border-caju disabled:opacity-60"
+              />
+              <button
+                type="submit"
+                disabled={enviando || semChave || !texto.trim()}
+                className="rounded bg-caju px-3 py-2 text-sm font-semibold text-white disabled:opacity-50"
+              >
+                {t("enviar")}
+              </button>
+            </form>
+            <p className="px-3 pb-2 text-[10px] text-tinta-suave">{t("avisoIA")}</p>
           </div>
-
-          <form
-            className="flex gap-2 p-3 pt-2"
-            onSubmit={(e) => {
-              e.preventDefault();
-              enviar(texto);
-            }}
-          >
-            <input
-              value={texto}
-              onChange={(e) => setTexto(e.target.value)}
-              placeholder={t("placeholder")}
-              disabled={enviando || semChave}
-              className="flex-1 rounded border border-linha bg-white px-3 py-2 text-sm outline-none focus:border-caju disabled:opacity-60"
-            />
-            <button
-              type="submit"
-              disabled={enviando || semChave || !texto.trim()}
-              className="rounded bg-caju px-3 py-2 text-sm font-semibold text-white disabled:opacity-50"
-            >
-              {t("enviar")}
-            </button>
-          </form>
-          <p className="px-3 pb-2 text-[10px] text-tinta-suave">{t("avisoIA")}</p>
-        </div>
+        </>
       )}
     </>
   );

@@ -10,22 +10,16 @@ type Props = {
   variant?: "solid" | "outline" | "text" | "soft";
 };
 
-function Ararinha({ className }: { className?: string }) {
+function Ararinha({ tone = "blue" }: { tone?: "blue" | "orange" | "red" }) {
+  const corpo = tone === "orange" ? "#F59E0B" : tone === "red" ? "#DC2626" : "#1d4ed8";
+  const asa = tone === "blue" ? "#F59E0B" : "#1d4ed8";
   return (
-    <svg
-      viewBox="0 0 32 28"
-      className={className}
-      fill="none"
-      aria-hidden
-    >
+    <svg viewBox="0 0 32 28" className="h-full w-full" fill="none" aria-hidden>
       <path
         d="M6 16c4 1.5 7 5 8 9 3-4 7-6.5 12-6.5-2.5-4-6.5-6.5-10.5-7.5 1.5-4 1-8-.5-10.5-2.5 2.5-5.5 6.5-9 8 2.5 1.5 4 4 0 7.5Z"
-        fill="#1d4ed8"
+        fill={corpo}
       />
-      <path
-        d="M14 12c2 0 4.5 1 6 3-2 .5-4.5.2-6-1.5V12Z"
-        fill="#F59E0B"
-      />
+      <path d="M14 12c2 0 4.5 1 6 3-2 .5-4.5.2-6-1.5V12Z" fill={asa} />
       <path d="M22 14c2.5.2 4.5 1.2 5.5 2.5-1.5.8-3.5 1-5.5.5V14Z" fill="#DC2626" />
       <circle cx="20" cy="11" r="1.3" fill="#111827" />
       <circle cx="20.4" cy="10.7" r="0.4" fill="#fff" />
@@ -35,17 +29,17 @@ function Ararinha({ className }: { className?: string }) {
 
 function ArarinhasDecor() {
   return (
-    <>
-      <span className="ararinha ararinha-a" aria-hidden>
-        <Ararinha className="h-5 w-6" />
+    <span className="ararinhas-layer" aria-hidden>
+      <span className="ararinha ararinha-a">
+        <Ararinha tone="blue" />
       </span>
-      <span className="ararinha ararinha-b" aria-hidden>
-        <Ararinha className="h-4 w-5" />
+      <span className="ararinha ararinha-b">
+        <Ararinha tone="orange" />
       </span>
-      <span className="ararinha ararinha-c" aria-hidden>
-        <Ararinha className="h-3.5 w-4" />
+      <span className="ararinha ararinha-c">
+        <Ararinha tone="red" />
       </span>
-    </>
+    </span>
   );
 }
 
@@ -59,9 +53,6 @@ function classes(variant: Props["variant"]) {
         : "inline-flex items-center gap-1.5 text-sm font-semibold text-arara transition hover:text-arara-deep";
 }
 
-/**
- * CTA com ararinhas animadas ao redor — facilita ver o botão (acessibilidade).
- */
 export default function CtaArara({
   href,
   children,
@@ -71,7 +62,7 @@ export default function CtaArara({
   return (
     <Link
       href={href}
-      className={`cta-arara-wrap group relative ${classes(variant)} ${className}`}
+      className={`cta-arara-wrap group relative overflow-visible ${classes(variant)} ${className}`}
     >
       <ArarinhasDecor />
       <span className="relative z-[1]">{children}</span>
@@ -93,7 +84,7 @@ export function CtaAraraAnchor({
   return (
     <a
       href={href}
-      className={`cta-arara-wrap group relative ${classes(variant)} ${className}`}
+      className={`cta-arara-wrap group relative overflow-visible ${classes(variant)} ${className}`}
     >
       <ArarinhasDecor />
       <span className="relative z-[1]">{children}</span>
@@ -101,10 +92,9 @@ export function CtaAraraAnchor({
   );
 }
 
-/** Destaca links de texto tipo "Ver detalhes" */
 export function CtaAraraInline({ children }: { children: ReactNode }) {
   return (
-    <span className="cta-arara-wrap relative inline-flex items-center gap-1.5">
+    <span className="cta-arara-wrap relative inline-flex items-center gap-1.5 overflow-visible">
       <ArarinhasDecor />
       <span className="relative z-[1]">{children}</span>
     </span>

@@ -83,10 +83,10 @@ export default async function Home({
             </div>
           </div>
 
-          <div className="hidden justify-center lg:flex">
-            <div className="w-full max-w-sm rounded-lg border border-white/15 bg-arara-deep/40 p-4 backdrop-blur-sm">
-              <MapaBrasilSergipe className="h-auto w-full" />
-              <p className="mt-2 text-center text-[11px] text-white/70">
+          <div className="flex justify-center lg:justify-end">
+            <div className="w-full max-w-md rounded-2xl border border-white/20 bg-gradient-to-br from-white/15 to-white/5 p-3 shadow-[0_12px_40px_rgba(0,0,0,0.25)] backdrop-blur-md sm:p-4">
+              <MapaBrasilSergipe className="w-full" />
+              <p className="mt-3 text-center text-[11px] font-medium tracking-wide text-white/80">
                 {t("mapaLegenda")}
               </p>
             </div>
@@ -108,7 +108,7 @@ export default async function Home({
                 {t("previewTexto")}
               </p>
             </div>
-            <CtaArara href="/historia" variant="soft">
+            <CtaArara href="/historia" variant="soft" className="m-3 shrink-0">
               {t("previewCta")} →
             </CtaArara>
           </div>
