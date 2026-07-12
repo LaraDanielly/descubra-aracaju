@@ -108,7 +108,7 @@ export default async function Home({
                 {t("previewTexto")}
               </p>
             </div>
-            <CtaArara href="/historia" variant="soft" className="m-3 shrink-0">
+            <CtaArara href="/historia" variant="soft" className="shrink-0">
               {t("previewCta")} →
             </CtaArara>
           </div>

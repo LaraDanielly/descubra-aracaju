@@ -147,7 +147,7 @@ export default function ChatWidget() {
   return (
     <>
       {!aberto && (
-        <div className="chat-launcher fixed bottom-[5.5rem] right-4 z-50 md:bottom-6">
+        <div className="chat-launcher">
           <span className="chat-launcher-ring" aria-hidden />
           <button
             type="button"

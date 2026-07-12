@@ -135,146 +135,64 @@ h4 {
   animation: nav-slide 0.85s ease-in-out infinite;
 }
 
-@keyframes cta-arara-hop {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(-8deg);
-  }
-  40% {
-    transform: translate(3px, -3px) rotate(6deg);
-  }
-  70% {
-    transform: translate(-1px, -1px) rotate(-2deg);
-  }
-}
-
-.cta-arara {
-  display: inline-flex;
-  color: inherit;
-  opacity: 0.85;
-  animation: cta-arara-hop 2.4s ease-in-out infinite;
-}
-
-.group:hover .cta-arara {
-  opacity: 1;
-  animation-duration: 1.2s;
-}
-
-.cta-arara-static {
-  display: inline-flex;
-}
-
-.cta-arara-wrap {
-  isolation: isolate;
-  overflow: visible !important;
-}
-
-.ararinhas-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  z-index: 2;
-  overflow: visible;
-}
-
-.ararinha {
-  position: absolute;
-  display: block;
-  width: 22px;
-  height: 20px;
-  pointer-events: none;
-  z-index: 2;
-  filter: drop-shadow(0 2px 3px rgba(0, 0, 0, 0.35));
-  will-change: transform;
-}
-
-.ararinha-a {
-  top: -16px;
-  left: -10px;
-  animation: ararinha-voo-a 1.8s ease-in-out infinite;
-}
-
-.ararinha-b {
-  top: -14px;
-  right: -12px;
-  width: 20px;
-  height: 18px;
-  animation: ararinha-voo-b 2.1s ease-in-out infinite 0.25s;
-}
-
-.ararinha-c {
-  bottom: -14px;
-  right: 18%;
-  width: 18px;
-  height: 16px;
-  animation: ararinha-voo-c 1.9s ease-in-out infinite 0.45s;
-}
-
-@keyframes ararinha-voo-a {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(-12deg) scale(1);
-  }
-  50% {
-    transform: translate(10px, -12px) rotate(10deg) scale(1.15);
-  }
-}
-
-@keyframes ararinha-voo-b {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(10deg) scale(1);
-  }
-  50% {
-    transform: translate(-12px, -10px) rotate(-16deg) scale(1.18);
-  }
-}
-
-@keyframes ararinha-voo-c {
-  0%,
-  100% {
-    transform: translate(0, 0) rotate(-6deg) scale(1);
-  }
-  50% {
-    transform: translate(8px, 8px) rotate(14deg) scale(1.12);
-  }
-}
-
-@keyframes chat-float {
+@keyframes cta-arara-nudge {
   0%,
   100% {
     transform: translateY(0);
   }
   50% {
-    transform: translateY(-10px);
+    transform: translateY(-2px);
+  }
+}
+
+.cta-arara-mini {
+  display: inline-block;
+  vertical-align: middle;
+  animation: cta-arara-nudge 1.8s ease-in-out infinite;
+}
+
+@keyframes chat-float {
+  0%,
+  100% {
+    transform: translate3d(0, 0, 0);
+  }
+  50% {
+    transform: translate3d(0, -14px, 0);
   }
 }
 
 @keyframes chat-pulse-ring {
   0% {
-    transform: scale(0.92);
-    opacity: 0.7;
-  }
-  70% {
-    transform: scale(1.25);
-    opacity: 0;
+    transform: scale(1);
+    opacity: 0.5;
   }
   100% {
-    transform: scale(1.25);
+    transform: scale(1.2);
     opacity: 0;
   }
 }
 
 .chat-launcher {
-  animation: chat-float 2.8s ease-in-out infinite;
+  position: fixed !important;
+  right: 1rem !important;
+  bottom: 5.5rem !important;
+  z-index: 50 !important;
+  animation: chat-float 2.2s ease-in-out infinite !important;
+  will-change: transform;
+}
+
+@media (min-width: 768px) {
+  .chat-launcher {
+    bottom: 1.5rem !important;
+  }
 }
 
 .chat-launcher-ring {
   position: absolute;
-  inset: -6px;
-  border-radius: 1.25rem;
-  border: 2px solid rgba(194, 65, 12, 0.55);
-  animation: chat-pulse-ring 2.2s ease-out infinite;
+  inset: -5px;
+  border-radius: 1.15rem;
+  border: 2px solid rgba(194, 65, 12, 0.45);
+  animation: chat-pulse-ring 2s ease-out infinite;
   pointer-events: none;
 }
 
@@ -286,34 +204,16 @@ h4 {
   content: "";
   position: absolute;
   right: 22px;
-  bottom: -8px;
-  border-width: 8px 8px 0 8px;
+  bottom: -7px;
+  border-width: 7px 7px 0 7px;
   border-style: solid;
   border-color: #c2410c transparent transparent transparent;
 }
 
-@keyframes mapa-pulse {
-  0%,
-  100% {
-    opacity: 0.55;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.06);
-  }
-}
-
-.mapa-pulse {
-  transform-origin: center;
-  animation: mapa-pulse 2.8s ease-in-out infinite;
-}
-
 @media (prefers-reduced-motion: reduce) {
-  .ararinha,
+  .cta-arara-mini,
   .chat-launcher,
-  .chat-launcher-ring,
-  .mapa-pulse {
+  .chat-launcher-ring {
     animation: none !important;
   }
 }
