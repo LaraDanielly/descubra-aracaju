@@ -18,6 +18,24 @@
       "sourceType": "github",
       "skillPath": "skills/marketing-psychology/SKILL.md",
       "computedHash": "d057044710ce7b7f9b90b84b3ab64e9359aaf47982b922ec10daca3822185ede"
+    },
+    "short-form-viral": {
+      "source": "local",
+      "sourceType": "local",
+      "skillPath": ".agents/skills/short-form-viral/SKILL.md",
+      "computedHash": "local"
+    },
+    "travel-creator": {
+      "source": "local",
+      "sourceType": "local",
+      "skillPath": ".agents/skills/travel-creator/SKILL.md",
+      "computedHash": "local"
+    },
+    "creator-monetization": {
+      "source": "local",
+      "sourceType": "local",
+      "skillPath": ".agents/skills/creator-monetization/SKILL.md",
+      "computedHash": "local"
     }
   }
 }
