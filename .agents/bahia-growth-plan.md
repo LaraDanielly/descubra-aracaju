@@ -19,7 +19,7 @@ Bio sugerida:
 
 ## Semana 1 — Consertar o empacotamento
 
-Meta: sair da faixa &lt;200 views no TikTok.
+Meta: sair da faixa abaixo de 200 views no TikTok.
 
 | Dia | Formato | Hook (falar/texto na tela) |
 |-----|---------|----------------------------|
@@ -89,7 +89,7 @@ Fotos paradas: zoom lento + texto + 1 take falando pro celular (rosto vende conf
 ## Dinheiro (quando)
 
 Agora: **zero foco em grana**. Gargalo é view.
-Depois de vários vídeos &gt;1k–10k de forma repetida: afiliados, pousadas, PDF de roteiro.
+Depois de vários vídeos acima de 1k–10k de forma repetida: afiliados, pousadas, PDF de roteiro.
 Ver skill `creator-monetization`.
 
 ## Expectativa honesta
