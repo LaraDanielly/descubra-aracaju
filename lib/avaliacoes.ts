@@ -1,5 +1,3 @@
-import { createClient, type SupabaseClient } from "@supabase/supabase-js";
-
 export interface Avaliacao {
   id: string;
   ponto_slug: string;
@@ -9,15 +7,7 @@ export interface Avaliacao {
   created_at: string;
 }
 
-const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-const anonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-
-let supabase: SupabaseClient | null = null;
-if (url && anonKey) {
-  supabase = createClient(url, anonKey);
-}
-
-export const usandoSupabase = Boolean(supabase);
+export type PersistenciaAvaliacoes = "supabase" | "local";
 
 const chaveLocal = (slug: string) => `descubra-aracaju:avaliacoes:${slug}`;
 
@@ -43,18 +33,29 @@ export function ordenarAvaliacoes(avaliacoes: Avaliacao[]): Avaliacao[] {
   );
 }
 
-export async function listarAvaliacoes(slug: string): Promise<Avaliacao[]> {
-  if (supabase) {
-    const { data, error } = await supabase
-      .from("avaliacoes")
-      .select("*")
-      .eq("ponto_slug", slug)
-      .order("nota", { ascending: false })
-      .order("created_at", { ascending: false });
-    if (error) throw error;
-    return data ?? [];
+export async function persistenciaAvaliacoes(): Promise<PersistenciaAvaliacoes> {
+  try {
+    const res = await fetch("/api/avaliacoes");
+    if (!res.ok) return "local";
+    const data = (await res.json()) as { persistencia?: PersistenciaAvaliacoes };
+    return data.persistencia === "supabase" ? "supabase" : "local";
+  } catch {
+    return "local";
   }
-  return ordenarAvaliacoes(lerLocal(slug));
+}
+
+export async function listarAvaliacoes(slug: string): Promise<Avaliacao[]> {
+  try {
+    const res = await fetch(
+      `/api/avaliacoes?slug=${encodeURIComponent(slug)}`
+    );
+    if (res.status === 503) return ordenarAvaliacoes(lerLocal(slug));
+    if (!res.ok) throw new Error("fetch_failed");
+    const data = (await res.json()) as { avaliacoes?: Avaliacao[] };
+    return data.avaliacoes ?? [];
+  } catch {
+    return ordenarAvaliacoes(lerLocal(slug));
+  }
 }
 
 export async function enviarAvaliacao(entrada: {
@@ -62,28 +63,31 @@ export async function enviarAvaliacao(entrada: {
   nome: string;
   nota: number;
   comentario: string;
-}): Promise<Avaliacao> {
+}): Promise<{ avaliacao: Avaliacao; persistencia: PersistenciaAvaliacoes }> {
   const nova: Avaliacao = {
     id: crypto.randomUUID(),
     created_at: new Date().toISOString(),
     ...entrada,
   };
 
-  if (supabase) {
-    const { data, error } = await supabase
-      .from("avaliacoes")
-      .insert({
-        ponto_slug: entrada.ponto_slug,
-        nome: entrada.nome,
-        nota: entrada.nota,
-        comentario: entrada.comentario,
-      })
-      .select()
-      .single();
-    if (error) throw error;
-    return data as Avaliacao;
+  try {
+    const res = await fetch("/api/avaliacoes", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(entrada),
+    });
+    if (res.status === 503) {
+      gravarLocal(entrada.ponto_slug, [...lerLocal(entrada.ponto_slug), nova]);
+      return { avaliacao: nova, persistencia: "local" };
+    }
+    if (!res.ok) throw new Error("post_failed");
+    const data = (await res.json()) as {
+      avaliacao: Avaliacao;
+      persistencia: PersistenciaAvaliacoes;
+    };
+    return data;
+  } catch {
+    gravarLocal(entrada.ponto_slug, [...lerLocal(entrada.ponto_slug), nova]);
+    return { avaliacao: nova, persistencia: "local" };
   }
-
-  gravarLocal(entrada.ponto_slug, [...lerLocal(entrada.ponto_slug), nova]);
-  return nova;
 }

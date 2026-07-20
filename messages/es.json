@@ -7,7 +7,8 @@
     "noGoogle": "({total} en Google)",
     "aracaju": "Aracaju",
     "saoCristovao": "São Cristóvão",
-    "carregando": "Cargando..."
+    "carregando": "Cargando...",
+    "notaEstrelas": "Nota {nota} de 5"
   },
   "nav": {
     "inicio": "Inicio",
@@ -18,11 +19,13 @@
     "buscar": "Buscar",
     "buscarPlaceholder": "Busca un lugar o una página...",
     "buscarDica": "Escribe para buscar entre los {total} lugares de la guía",
+    "buscando": "Buscando...",
     "nenhumResultado": "No encontramos nada con ese nombre.",
     "paginas": "Páginas",
     "lugares": "Lugares",
     "abrirMenu": "Abrir menú",
     "fecharMenu": "Cerrar menú",
+    "menuPrincipal": "Menú principal",
     "idioma": "Idioma",
     "atalhoBusca": "Ctrl K"
   },
@@ -91,6 +94,7 @@
     "metaTitulo": "Ranking: lugares, playas, restaurantes y hoteles",
     "metaDescricao": "Rankings de puntos turísticos, playas, restaurantes de la Orla y hoteles de Aracaju y São Cristóvão con notas de Google y Booking.",
     "posicao": "{posicao}º",
+    "abasTitulo": "Categorías del ranking",
     "tabLugares": "Top lugares",
     "tabVisitados": "Más visitados",
     "tabPraias": "Top playas",

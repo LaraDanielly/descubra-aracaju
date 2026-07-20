@@ -1,8 +1,9 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, useCallback } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { speechLang } from "@/lib/format";
 
 type Msg = { role: "user" | "assistant"; content: string };
 
@@ -17,22 +18,10 @@ type SpeechRec = {
   onend: (() => void) | null;
 };
 
-function linkificar(texto: string) {
-  const partes = texto.split(/(\/ponto\/[a-z0-9-]+)/g);
-  return partes.map((p, i) =>
-    p.startsWith("/ponto/") ? (
-      <Link key={i} href={p} className="font-semibold text-arara underline">
-        {p}
-      </Link>
-    ) : (
-      <span key={i}>{p}</span>
-    )
-  );
-}
-
 export default function ChatWidget() {
   const t = useTranslations("chat");
   const locale = useLocale();
+  const [nomesSlug, setNomesSlug] = useState<Record<string, string>>({});
   const [aberto, setAberto] = useState(false);
   const [msgs, setMsgs] = useState<Msg[]>([]);
   const [texto, setTexto] = useState("");
@@ -44,6 +33,34 @@ export default function ChatWidget() {
   const [floatY, setFloatY] = useState(0);
   const fimRef = useRef<HTMLDivElement>(null);
   const recRef = useRef<SpeechRec | null>(null);
+
+  const linkificar = useCallback(
+    (texto: string) => {
+      const partes = texto.split(/(\/ponto\/[a-z0-9-]+)/g);
+      return partes.map((p, i) => {
+        if (!p.startsWith("/ponto/")) return <span key={i}>{p}</span>;
+        const slug = p.replace("/ponto/", "");
+        const label =
+          nomesSlug[slug] ??
+          slug.replace(/-/g, " ").replace(/\b\w/g, (c) => c.toUpperCase());
+        return (
+          <Link key={i} href={p} className="font-semibold text-arara underline">
+            {label}
+          </Link>
+        );
+      });
+    },
+    [nomesSlug]
+  );
+
+  useEffect(() => {
+    fetch(`/api/busca?locale=${encodeURIComponent(locale)}`)
+      .then((r) => r.json())
+      .then((d: { nomes?: Record<string, string> }) =>
+        setNomesSlug(d.nomes ?? {})
+      )
+      .catch(() => setNomesSlug({}));
+  }, [locale]);
 
   useEffect(() => {
     if (!aberto) return;
@@ -83,7 +100,7 @@ export default function ChatWidget() {
     }
     window.speechSynthesis.cancel();
     const u = new SpeechSynthesisUtterance(textoFala);
-    u.lang = locale === "en" ? "en-US" : locale === "es" ? "es-ES" : "pt-BR";
+    u.lang = speechLang(locale);
     u.rate = 1.02;
     window.speechSynthesis.speak(u);
   }
@@ -100,7 +117,7 @@ export default function ChatWidget() {
         : undefined;
     if (!SR) return;
     const rec = new SR();
-    rec.lang = locale === "en" ? "en-US" : locale === "es" ? "es-ES" : "pt-BR";
+    rec.lang = speechLang(locale);
     rec.continuous = false;
     rec.interimResults = false;
     rec.onresult = (ev) => {
@@ -253,7 +270,11 @@ export default function ChatWidget() {
               <p className="text-xs text-arara-soft">{t("subtitulo")}</p>
             </div>
 
-            <div className="flex-1 space-y-3 overflow-y-auto p-3">
+            <div
+              className="flex-1 space-y-3 overflow-y-auto p-3"
+              aria-live="polite"
+              aria-relevant="additions text"
+            >
               {semChave && msgs.length === 0 && (
                 <p className="rounded border border-caju/30 bg-caju-soft/40 p-3 text-sm text-caju-deep">
                   {t("semChave")}

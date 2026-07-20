@@ -7,7 +7,8 @@
     "noGoogle": "({total} on Google)",
     "aracaju": "Aracaju",
     "saoCristovao": "São Cristóvão",
-    "carregando": "Loading..."
+    "carregando": "Loading...",
+    "notaEstrelas": "Rating {nota} out of 5"
   },
   "nav": {
     "inicio": "Home",
@@ -18,11 +19,13 @@
     "buscar": "Search",
     "buscarPlaceholder": "Search a place or page...",
     "buscarDica": "Type to search the {total} places in this guide",
+    "buscando": "Searching...",
     "nenhumResultado": "Nothing found with that name.",
     "paginas": "Pages",
     "lugares": "Places",
     "abrirMenu": "Open menu",
     "fecharMenu": "Close menu",
+    "menuPrincipal": "Main menu",
     "idioma": "Language",
     "atalhoBusca": "Ctrl K"
   },
@@ -91,6 +94,7 @@
     "metaTitulo": "Ranking: places, beaches, restaurants and hotels",
     "metaDescricao": "Rankings of attractions, beaches, waterfront restaurants and hotels in Aracaju and São Cristóvão with Google and Booking scores.",
     "posicao": "#{posicao}",
+    "abasTitulo": "Ranking categories",
     "tabLugares": "Top places",
     "tabVisitados": "Most visited",
     "tabPraias": "Top beaches",

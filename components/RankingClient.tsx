@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
 import type { PontoResolvido } from "@/data/pontos";
+import { formatNumber } from "@/lib/format";
 import { tx } from "@/lib/locale-text";
 import { rankingRestaurantes, type Restaurante } from "@/data/restaurantes";
 import { rankingHoteis, type Hotel } from "@/data/hoteis";
@@ -66,12 +67,14 @@ export default function RankingClient({
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2" role="tablist">
+      <div className="flex flex-wrap gap-2" role="tablist" aria-label={t("abasTitulo")}>
         {abas.map((a) => (
           <button
             key={a.id}
             type="button"
             role="tab"
+            id={`ranking-tab-${a.id}`}
+            aria-controls={`ranking-panel-${a.id}`}
             aria-selected={aba === a.id}
             onClick={() => setAba(a.id)}
             className={`rounded border px-3 py-2 text-sm font-semibold transition ${
@@ -102,6 +105,11 @@ export default function RankingClient({
 
       <div className="renda my-6" />
 
+      <div
+        role="tabpanel"
+        id={`ranking-panel-${aba}`}
+        aria-labelledby={`ranking-tab-${aba}`}
+      >
       {(aba === "lugares" || aba === "visitados" || aba === "praias") && (
         <ol className="space-y-3">
           {(aba === "lugares"
@@ -140,7 +148,7 @@ export default function RankingClient({
                     <StarRating nota={p.notaGoogle} />
                     <span className="text-xs text-tinta-suave">
                       {t("avaliacoes", {
-                        total: p.avaliacoesGoogle.toLocaleString("pt-BR"),
+                        total: formatNumber(locale, p.avaliacoesGoogle),
                       })}
                     </span>
                     <TransporteBadge tipo={p.melhorTransporte} compacto />
@@ -189,6 +197,7 @@ export default function RankingClient({
           ))}
         </ol>
       )}
+      </div>
     </div>
   );
 }
@@ -253,7 +262,7 @@ function RestauranteCard({
             <StarRating nota={r.notaGoogle} />
             <span className="text-xs text-tinta-suave">
               {t("avaliacoes", {
-                total: r.avaliacoesGoogle.toLocaleString("pt-BR"),
+                total: formatNumber(locale, r.avaliacoesGoogle),
               })}
             </span>
             <span className="rounded bg-papel-2 px-2 py-0.5 text-[10px] font-semibold uppercase tracking-wide text-tinta">
@@ -379,7 +388,7 @@ function HotelCard({
               <StarRating nota={h.notaGoogle} />
               <span className="ml-2">
                 {t("avaliacoes", {
-                  total: h.avaliacoesGoogle.toLocaleString("pt-BR"),
+                  total: formatNumber(locale, h.avaliacoesGoogle),
                 })}
               </span>
             </div>

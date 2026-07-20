@@ -1,8 +1,9 @@
 "use client";
 
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
+import { formatNumber } from "@/lib/format";
 import type { PontoResolvido } from "@/data/pontos";
 import StarRating from "./StarRating";
 import TransporteBadge from "./TransporteBadge";
@@ -17,6 +18,7 @@ type Props = {
 export default function PontoCard({ ponto, posicao }: Props) {
   const t = useTranslations("comum");
   const cidades = useTranslations("cidades");
+  const locale = useLocale();
 
   return (
     <Link
@@ -52,7 +54,7 @@ export default function PontoCard({ ponto, posicao }: Props) {
           <StarRating nota={ponto.notaGoogle} />
           <span className="text-xs text-tinta-suave">
             {t("noGoogle", {
-              total: ponto.avaliacoesGoogle.toLocaleString("pt-BR"),
+              total: formatNumber(locale, ponto.avaliacoesGoogle),
             })}
           </span>
         </div>

@@ -1,5 +1,8 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 function Estrela({ fill }: { fill: number }) {
-  // fill: 0 a 1 (fração preenchida da estrela)
   const id = `estrela-${Math.round(fill * 100)}`;
   return (
     <svg viewBox="0 0 20 20" className="h-[1em] w-[1em]" aria-hidden="true">
@@ -24,11 +27,13 @@ export default function StarRating({
   nota: number;
   className?: string;
 }) {
+  const t = useTranslations("comum");
+
   return (
     <span
       className={`inline-flex items-center gap-0.5 ${className}`}
       role="img"
-      aria-label={`Nota ${nota.toFixed(1)} de 5`}
+      aria-label={t("notaEstrelas", { nota: nota.toFixed(1) })}
     >
       {[0, 1, 2, 3, 4].map((i) => (
         <Estrela key={i} fill={Math.max(0, Math.min(1, nota - i))} />

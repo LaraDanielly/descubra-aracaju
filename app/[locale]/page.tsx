@@ -20,7 +20,6 @@ export default async function Home({
     .slice(0, 10)
     .map((p) => resolverPonto(p, loc));
   const todos = PONTOS.map((p) => resolverPonto(p, loc));
-  const destaque = top10[0];
   const media =
     Math.round(
       (PONTOS.reduce((s, p) => s + p.notaGoogle, 0) / PONTOS.length) * 10
@@ -30,14 +29,14 @@ export default async function Home({
     <>
       <section className="relative overflow-hidden bg-arara-deep">
         <Image
-          src={destaque.fotos[0]}
+          src="/hero-aracaju.jpg"
           alt=""
           fill
           priority
           sizes="100vw"
-          className="object-cover opacity-20"
+          className="object-cover object-[center_35%]"
         />
-        <div className="absolute inset-0 bg-gradient-to-b from-arara-deep/90 via-arara-deep/80 to-papel" />
+        <div className="absolute inset-0 bg-gradient-to-b from-arara-deep/75 via-arara-deep/55 to-papel" />
         <div className="relative mx-auto grid max-w-6xl items-center gap-8 px-4 pb-16 pt-16 sm:pt-24 lg:grid-cols-[1.15fr_0.85fr]">
           <div>
             <p className="mb-3 text-xs font-semibold uppercase tracking-[0.22em] text-caju-soft">

@@ -13,11 +13,23 @@
       "skillPath": "SKILL.md",
       "computedHash": "dede9681d9fea5caed2fb9d88656af3024c9ec0136fc833415ffc6e16d762429"
     },
+    "instagram-carousel": {
+      "source": "marcolang/marketing-skills",
+      "sourceType": "github",
+      "skillPath": "instagram-carousel/SKILL.md",
+      "computedHash": "faf1562f25d67301b1349eb335b41c4ebc56e0f7065a0787c0110c76685da820"
+    },
     "marketing-psychology": {
       "source": "coreyhaines31/marketingskills",
       "sourceType": "github",
       "skillPath": "skills/marketing-psychology/SKILL.md",
       "computedHash": "d057044710ce7b7f9b90b84b3ab64e9359aaf47982b922ec10daca3822185ede"
+    },
+    "web-design-guidelines": {
+      "source": "vercel-labs/agent-skills",
+      "sourceType": "github",
+      "skillPath": "skills/web-design-guidelines/SKILL.md",
+      "computedHash": "f3bc47f890f42a44db1007ab390709ec368e4b8c089baee6b0007182236ac474"
     }
   }
 }

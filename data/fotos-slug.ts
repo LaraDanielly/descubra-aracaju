@@ -23,6 +23,7 @@ export const FOTOS_SLUG = new Set([
   "praia-dos-artistas",
   "bica-dos-pintos",
   "casa-culturas-populares",
+  "museu-historico-de-sergipe",
   "centro-historico",
   "pitu-com-pirao-da-eliane",
   "conversa-fiada",

@@ -23,6 +23,7 @@ import TransporteBadge from "@/components/TransporteBadge";
 import MapaClient from "@/components/MapaClient";
 import { LinksExternos } from "@/components/LinksExternos";
 import { RankBadge } from "@/components/RankBadge";
+import { formatNumber } from "@/lib/format";
 
 export function generateStaticParams() {
   return PONTOS.flatMap((p) =>
@@ -100,7 +101,7 @@ export default async function PontoPage({
                 <StarRating nota={ponto.notaGoogle} />
                 <span className="text-sm text-tinta-suave">
                   {ponto.notaGoogle.toFixed(1)} ·{" "}
-                  {ponto.avaliacoesGoogle.toLocaleString("pt-BR")}{" "}
+                  {formatNumber(loc, ponto.avaliacoesGoogle)}{" "}
                   {t("avaliacoesGoogle")}
                 </span>
                 <TransporteBadge tipo={ponto.melhorTransporte} />

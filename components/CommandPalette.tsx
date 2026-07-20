@@ -3,7 +3,8 @@
 import { useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Link } from "@/i18n/navigation";
-import { PONTOS, resolverPonto } from "@/data/pontos";
+import { navLinks } from "@/lib/nav";
+import type { ResultadoBusca } from "@/lib/busca-pontos";
 
 type Props = {
   aberto: boolean;
@@ -14,6 +15,11 @@ export default function CommandPalette({ aberto, onFechar }: Props) {
   const t = useTranslations("nav");
   const locale = useLocale();
   const [q, setQ] = useState("");
+  const [total, setTotal] = useState(0);
+  const [lugares, setLugares] = useState<ResultadoBusca[]>([]);
+  const [buscando, setBuscando] = useState(false);
+
+  const paginas = useMemo(() => navLinks(t), [t]);
 
   useEffect(() => {
     if (!aberto) setQ("");
@@ -27,29 +33,39 @@ export default function CommandPalette({ aberto, onFechar }: Props) {
     return () => window.removeEventListener("keydown", onKey);
   }, [aberto, onFechar]);
 
-  const paginas = useMemo(
-    () => [
-      { href: "/", label: t("inicio") },
-      { href: "/ranking", label: t("ranking") },
-      { href: "/mapa", label: t("mapa") },
-      { href: "/transporte", label: t("transporte") },
-      { href: "/historia", label: t("historia") },
-    ],
-    [t]
-  );
+  useEffect(() => {
+    if (!aberto) return;
+    fetch(`/api/busca?locale=${encodeURIComponent(locale)}`)
+      .then((r) => r.json())
+      .then((d: { total?: number }) => setTotal(d.total ?? 0))
+      .catch(() => setTotal(0));
+  }, [aberto, locale]);
 
-  const termo = q.trim().toLowerCase();
+  const termo = q.trim();
+  useEffect(() => {
+    if (!termo) {
+      setLugares([]);
+      setBuscando(false);
+      return;
+    }
+    setBuscando(true);
+    const id = window.setTimeout(() => {
+      fetch(
+        `/api/busca?q=${encodeURIComponent(termo)}&locale=${encodeURIComponent(locale)}`
+      )
+        .then((r) => r.json())
+        .then((d: { resultados?: ResultadoBusca[] }) =>
+          setLugares(d.resultados ?? [])
+        )
+        .catch(() => setLugares([]))
+        .finally(() => setBuscando(false));
+    }, 200);
+    return () => window.clearTimeout(id);
+  }, [termo, locale]);
+
   const paginasFiltradas = paginas.filter((p) =>
-    !termo ? true : p.label.toLowerCase().includes(termo)
+    !termo ? true : p.label.toLowerCase().includes(termo.toLowerCase())
   );
-  const lugares = PONTOS.map((p) => resolverPonto(p, locale))
-    .filter((p) =>
-      !termo
-        ? false
-        : p.nome.toLowerCase().includes(termo) ||
-          p.resumo.toLowerCase().includes(termo)
-    )
-    .slice(0, 8);
 
   if (!aberto) return null;
 
@@ -75,7 +91,7 @@ export default function CommandPalette({ aberto, onFechar }: Props) {
         <div className="max-h-80 overflow-y-auto p-2">
           {!termo && (
             <p className="px-2 py-3 text-xs text-tinta-suave">
-              {t("buscarDica", { total: PONTOS.length })}
+              {t("buscarDica", { total })}
             </p>
           )}
           {paginasFiltradas.length > 0 && (
@@ -94,6 +110,9 @@ export default function CommandPalette({ aberto, onFechar }: Props) {
                 </Link>
               ))}
             </div>
+          )}
+          {termo && buscando && (
+            <p className="px-2 py-3 text-xs text-tinta-suave">{t("buscando")}</p>
           )}
           {lugares.length > 0 && (
             <div>
@@ -115,7 +134,7 @@ export default function CommandPalette({ aberto, onFechar }: Props) {
               ))}
             </div>
           )}
-          {termo && paginasFiltradas.length === 0 && lugares.length === 0 && (
+          {termo && !buscando && paginasFiltradas.length === 0 && lugares.length === 0 && (
             <p className="px-2 py-4 text-sm text-tinta-suave">
               {t("nenhumResultado")}
             </p>

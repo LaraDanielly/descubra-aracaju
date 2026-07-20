@@ -3,7 +3,8 @@
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import L from "leaflet";
 import Image from "next/image";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
+import { formatNumber } from "@/lib/format";
 import { Link } from "@/i18n/navigation";
 import type { PontoResolvido } from "@/data/pontos";
 
@@ -41,6 +42,7 @@ export default function MapaPontos({
   selecionado?: string;
 }) {
   const t = useTranslations("comum");
+  const locale = useLocale();
   const pontoSelecionado = pontos.find((p) => p.slug === selecionado);
   const centro: [number, number] = pontoSelecionado
     ? [pontoSelecionado.lat, pontoSelecionado.lng]
@@ -79,7 +81,7 @@ export default function MapaPontos({
                 <p className="mt-0.5 text-xs font-semibold text-selo">
                   ★ {p.notaGoogle.toFixed(1)}{" "}
                   <span className="font-normal text-tinta-suave">
-                    ({p.avaliacoesGoogle.toLocaleString("pt-BR")})
+                    ({formatNumber(locale, p.avaliacoesGoogle)})
                   </span>
                 </p>
                 <Link

@@ -1,31 +1,25 @@
 import { GoogleGenAI } from "@google/genai";
-import { PONTOS, resolverPonto } from "@/data/pontos";
+import {
+  contextoGuia,
+  validarMensagensChat,
+} from "@/lib/chat-context";
 import {
   buscarClima,
   extrairLugarClima,
   formatarClima,
 } from "@/lib/clima";
+import { clientIp, rateLimit } from "@/lib/rate-limit";
+import { routing } from "@/i18n/routing";
 
 export const runtime = "nodejs";
 
-function contextoGuia(locale: string) {
-  const pontos = PONTOS.map((p) => resolverPonto(p, locale))
-    .map(
-      (p) =>
-        `- ${p.nome} (${p.cidade}, ${p.categoria}): nota ${p.notaGoogle} (${p.avaliacoesGoogle} no Google). ${p.resumo} Melhor transporte: ${p.melhorTransporte} — ${p.melhorTransporteMotivo}. Uber da Orla: ${p.uberDaOrla}. Preço: ${p.preco}. Horário: ${p.horario}. Slug: /ponto/${p.slug}`
-    )
-    .join("\n");
+const CHAT_RATE = { limit: 20, windowMs: 60_000 } as const;
 
-  return `Você é o Caju, assistente de suporte e guia do site Descubra Aracaju. Fala de forma direta e concreta, sem marketing genérico e sem emojis em excesso.
-Idioma da resposta: ${locale === "en" ? "English" : locale === "es" ? "Spanish" : "português brasileiro"}.
-Você ajuda com: lugares, transporte, comida, hotéis e também clima (quando houver dados de clima no histórico, use-os).
-Fatos fixos:
-- Ônibus em Aracaju não aceita dinheiro: só cartão Mais Aracaju, tarifa R$ 4,50.
-- São Cristóvão fica a ~25 km; Praça São Francisco = UNESCO 2010.
-- Aracaju fundada em 17/03/1855 (tabuleiro de Pirro).
-- Quando citar um lugar do guia, mencione /ponto/{slug}.
-Dados dos lugares:
-${pontos}`;
+function localeValido(locale: string | undefined): string {
+  if (locale && routing.locales.includes(locale as (typeof routing.locales)[number])) {
+    return locale;
+  }
+  return routing.defaultLocale;
 }
 
 export async function POST(req: Request) {
@@ -37,19 +31,33 @@ export async function POST(req: Request) {
     );
   }
 
-  let body: { messages?: { role: string; content: string }[]; locale?: string };
+  const ip = clientIp(req);
+  const limited = rateLimit(`chat:${ip}`, CHAT_RATE.limit, CHAT_RATE.windowMs);
+  if (!limited.ok) {
+    return Response.json(
+      { error: "rate_limited", retryAfter: limited.retryAfter },
+      { status: 429, headers: { "Retry-After": String(limited.retryAfter) } }
+    );
+  }
+
+  let body: {
+    messages?: { role: string; content: string }[];
+    locale?: string;
+  };
   try {
     body = await req.json();
   } catch {
     return Response.json({ error: "invalid_json" }, { status: 400 });
   }
 
-  const locale = body.locale ?? "pt";
+  const locale = localeValido(body.locale);
   const messages = body.messages ?? [];
-  const last = messages.filter((m) => m.role === "user").at(-1)?.content;
-  if (!last) {
-    return Response.json({ error: "empty" }, { status: 400 });
+  const validationError = validarMensagensChat(messages);
+  if (validationError) {
+    return Response.json({ error: validationError }, { status: 400 });
   }
+
+  const last = messages.filter((m) => m.role === "user").at(-1)!.content;
 
   let climaBloco = "";
   const lugarClima = extrairLugarClima(last);
@@ -78,7 +86,7 @@ export async function POST(req: Request) {
         { role: "user", parts: [{ text: last + climaBloco }] },
       ],
       config: {
-        systemInstruction: contextoGuia(locale),
+        systemInstruction: contextoGuia(locale, last),
         temperature: 0.7,
         maxOutputTokens: 1024,
       },

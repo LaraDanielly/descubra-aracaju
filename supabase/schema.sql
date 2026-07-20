@@ -22,3 +22,6 @@ create policy "leitura publica de avaliacoes"
 create policy "qualquer visitante pode avaliar"
   on public.avaliacoes for insert
   with check (true);
+
+-- Produção: prefira enviar avaliações via POST /api/avaliacoes (rate limit + validação).
+-- Para restringir inserts diretos do browser, remova a policy acima e use service role só no servidor.

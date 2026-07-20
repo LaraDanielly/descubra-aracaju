@@ -3,6 +3,8 @@
 import { useEffect, useState } from "react";
 import { useTranslations } from "next-intl";
 import { Link, usePathname } from "@/i18n/navigation";
+import { isNavActive } from "@/lib/nav";
+import { useNavLinks } from "@/hooks/useNavLinks";
 import Logo from "./Logo";
 import LanguageSwitcher from "./LanguageSwitcher";
 import CommandPalette from "./CommandPalette";
@@ -10,16 +12,9 @@ import CommandPalette from "./CommandPalette";
 export default function Header() {
   const t = useTranslations("nav");
   const pathname = usePathname();
+  const links = useNavLinks();
   const [menuAberto, setMenuAberto] = useState(false);
   const [buscaAberta, setBuscaAberta] = useState(false);
-
-  const links = [
-    { href: "/", label: t("inicio") },
-    { href: "/ranking", label: t("ranking") },
-    { href: "/mapa", label: t("mapa") },
-    { href: "/transporte", label: t("transporte") },
-    { href: "/historia", label: t("historia") },
-  ];
 
   useEffect(() => {
     function onKey(e: KeyboardEvent) {
@@ -44,10 +39,9 @@ export default function Header() {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-1 lg:flex">
+          <nav className="hidden items-center gap-1 lg:flex" aria-label={t("menuPrincipal")}>
             {links.map((l) => {
-              const ativo =
-                l.href === "/" ? pathname === "/" : pathname.startsWith(l.href);
+              const ativo = isNavActive(pathname, l.href);
               return (
                 <Link
                   key={l.href}
@@ -57,6 +51,7 @@ export default function Header() {
                       ? "border-b-2 border-caju text-caju-deep"
                       : "text-tinta-suave hover:text-tinta"
                   }`}
+                  aria-current={ativo ? "page" : undefined}
                 >
                   {l.label}
                 </Link>
@@ -96,13 +91,14 @@ export default function Header() {
         </div>
 
         {menuAberto && (
-          <nav className="border-t border-linha bg-papel px-4 py-3 lg:hidden">
+          <nav className="border-t border-linha bg-papel px-4 py-3 lg:hidden" aria-label={t("menuPrincipal")}>
             {links.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 onClick={() => setMenuAberto(false)}
                 className="block border-b border-linha/60 py-3 text-sm font-medium last:border-0"
+                aria-current={isNavActive(pathname, l.href) ? "page" : undefined}
               >
                 {l.label}
               </Link>

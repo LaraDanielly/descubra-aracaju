@@ -1,13 +1,13 @@
 "use client";
 
 import { useEffect, useMemo, useState } from "react";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import type { AvaliacaoViajante } from "@/data/avaliacoes-viajantes";
+import { formatMonthYear, formatNumber } from "@/lib/format";
 import {
   enviarAvaliacao,
   listarAvaliacoes,
   ordenarAvaliacoes,
-  usandoSupabase,
   type Avaliacao,
 } from "@/lib/avaliacoes";
 import StarRating from "./StarRating";
@@ -20,13 +20,6 @@ interface ItemExibicao {
   comentario: string;
   quando: string;
   doSite: boolean;
-}
-
-function formatarData(iso: string) {
-  return new Date(iso).toLocaleDateString("pt-BR", {
-    month: "long",
-    year: "numeric",
-  });
 }
 
 export default function Avaliacoes({
@@ -46,6 +39,7 @@ export default function Avaliacoes({
 }) {
   const t = useTranslations("avaliacoes");
   const comum = useTranslations("comum");
+  const locale = useLocale();
   const [doUsuario, setDoUsuario] = useState<Avaliacao[]>([]);
   const [nome, setNome] = useState("");
   const [nota, setNota] = useState(5);
@@ -65,7 +59,7 @@ export default function Avaliacoes({
       nome: a.nome,
       nota: a.nota,
       comentario: a.comentario,
-      quando: formatarData(a.created_at),
+      quando: formatMonthYear(locale, a.created_at),
       doSite: true,
     }));
     const externas: ItemExibicao[] = curadas.map((c, i) => ({
@@ -80,7 +74,7 @@ export default function Avaliacoes({
     return [...doSite, ...externas].sort(
       (a, b) => b.nota - a.nota || Number(b.doSite) - Number(a.doSite)
     );
-  }, [doUsuario, curadas]);
+  }, [doUsuario, curadas, locale]);
 
   const mediaSite = useMemo(() => {
     const todas = [
@@ -97,18 +91,18 @@ export default function Avaliacoes({
     setEnviando(true);
     setMensagem(null);
     try {
-      const nova = await enviarAvaliacao({
+      const { avaliacao, persistencia } = await enviarAvaliacao({
         ponto_slug: slug,
         nome: nome.trim(),
         nota,
         comentario: comentario.trim(),
       });
-      setDoUsuario((atual) => [nova, ...atual]);
+      setDoUsuario((atual) => [avaliacao, ...atual]);
       setNome("");
       setComentario("");
       setNota(5);
       setMensagem(
-        usandoSupabase ? t("sucessoSupabase") : t("sucessoLocal")
+        persistencia === "supabase" ? t("sucessoSupabase") : t("sucessoLocal")
       );
     } catch {
       setMensagem(t("erro"));
@@ -135,7 +129,7 @@ export default function Avaliacoes({
             <StarRating nota={notaGoogle} />
             <p className="mt-1 text-xs text-tinta-suave">
               {comum("avaliacoesNoGoogle", {
-                total: totalGoogle.toLocaleString("pt-BR"),
+                total: formatNumber(locale, totalGoogle),
               })}
             </p>
           </div>
